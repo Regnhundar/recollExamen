@@ -1,3 +1,4 @@
+import { ImageSourcePropType } from 'react-native';
 export interface Ability {
     id: string;
     icon: string;
@@ -10,7 +11,7 @@ export interface Ability {
 
 export interface GameClass {
     id: string;
-    portrait: string;
+    portrait: ImageSourcePropType;
     name: string;
     maxhp: number;
     hp: number;

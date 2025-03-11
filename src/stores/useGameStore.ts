@@ -3,7 +3,7 @@ import { GameClass } from '../../interfaces/index';
 
 interface GameStore {
     playerTurn: number;
-    setPlayerTurn: () => void;
+    setPlayerTurn: (value: number | ((prev: number) => number)) => void;
     playerOne: GameClass | null;
     setPlayerOne: (playerOne: GameClass | null) => void;
     playerTwo: GameClass | null;
@@ -12,11 +12,11 @@ interface GameStore {
     setIsGameOver: (arg: boolean) => void;
 }
 
-const useGameStore = create<GameStore>((set) => ({
+export const useGameStore = create<GameStore>((set) => ({
     playerTurn: 1,
-    setPlayerTurn: () =>
+    setPlayerTurn: (value) =>
         set((state) => ({
-            playerTurn: state.playerTurn === 1 ? 2 : 1,
+            playerTurn: typeof value === 'function' ? value(state.playerTurn) : value,
         })),
     playerOne: null,
     setPlayerOne: (playerOne) => set({ playerOne: playerOne }),
@@ -25,5 +25,3 @@ const useGameStore = create<GameStore>((set) => ({
     isGameOver: false,
     setIsGameOver: (boolean) => set({ isGameOver: boolean }),
 }));
-
-export default useGameStore;

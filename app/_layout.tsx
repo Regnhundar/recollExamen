@@ -1,3 +1,4 @@
+import { theme } from '@/src/theme';
 import { Stack } from 'expo-router';
 
 export default function RootLayout() {
@@ -9,12 +10,23 @@ export default function RootLayout() {
                     headerShown: false,
                     navigationBarHidden: true,
                     statusBarHidden: true,
-                    statusBarBackgroundColor: 'transparent',
+                }}
+            />
+            <Stack.Screen
+                name='classSelection'
+                options={{
+                    headerShown: false,
+                    navigationBarHidden: true,
+                    statusBarHidden: true,
                 }}
             />
             <Stack.Screen
                 name='game'
-                options={{ headerShown: false, navigationBarHidden: true, statusBarHidden: true }}
+                options={{
+                    headerShown: false,
+                    navigationBarHidden: true,
+                    statusBarHidden: true,
+                }}
             />
         </Stack>
     );

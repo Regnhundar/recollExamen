@@ -1,28 +1,99 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import React from 'react';
+import { theme } from '../theme';
 
 interface Props {
     player: number;
 }
 export default function PlayerFrame({ player }: Props) {
     return (
-        <View style={player === 1 ? styles.playerFrame1 : styles.playerFrame2}>
-            <Text>PlayerFrame</Text>
+        <View style={[styles.playerFrame, player === 1 ? styles.playerOne : styles.playerTwo]}>
+            <View style={styles.portraitWrapper}>
+                <Image style={styles.playerPortrait} source={require('../../assets/images/zerker.png')} />
+            </View>
+
+            <View style={styles.rightSide}>
+                <View style={styles.healthbar}>
+                    <Text style={styles.healthNumber}>100</Text>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Pressable style={styles.button} onPress={() => console.log('MAD SWING!')}>
+                        <Image
+                            source={require('../../assets/images/abilities/zerker/mad-swing.png')}
+                            style={styles.icon}
+                        />
+                    </Pressable>
+                    <Pressable style={styles.button} onPress={() => console.log('IGNORE PAIN')}>
+                        <Image
+                            source={require('../../assets/images/abilities/zerker/ignore-pain.png')}
+                            style={styles.icon}
+                        />
+                    </Pressable>
+                    <Pressable style={styles.button} onPress={() => console.log('ENRAGE')}>
+                        <Image
+                            source={require('../../assets/images/abilities/zerker/enrage.png')}
+                            style={styles.icon}
+                        />
+                    </Pressable>
+                </View>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    playerFrame1: {
+    playerFrame: {
         width: '100%',
-        height: '15%',
-        backgroundColor: 'red',
-        marginBottom: 'auto',
+        height: '20%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'nowrap',
+        paddingInline: theme.spacing.small,
+        paddingBlock: theme.spacing.large,
+        gap: theme.spacing.small,
+        backgroundColor: theme.colors.primary,
     },
-    playerFrame2: {
-        width: '100%',
-        height: '15%',
-        backgroundColor: 'red',
+    playerOne: {
         marginTop: 'auto',
     },
+    playerTwo: {
+        marginBottom: 'auto',
+        transform: [{ rotate: '180deg' }],
+    },
+    portraitWrapper: { height: '100%' },
+    playerPortrait: {
+        maxHeight: '100%',
+        aspectRatio: 1,
+        objectFit: 'contain',
+        backgroundColor: 'white',
+    },
+    rightSide: {
+        flex: 1,
+        gap: theme.spacing.xxsmall,
+    },
+    healthbar: {
+        flex: 1,
+        height: '50%',
+        backgroundColor: 'green',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: theme.borderWidth.medium,
+    },
+    healthNumber: {
+        color: theme.colors.white,
+        fontWeight: 600,
+    },
+    buttonContainer: {
+        height: '50%',
+        flexDirection: 'row',
+        columnGap: theme.spacing.xxsmall,
+    },
+    button: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: theme.spacing.xxsmall,
+        backgroundColor: 'beige',
+    },
+    icon: { objectFit: 'contain' },
 });

@@ -6,7 +6,7 @@ export default function Index() {
     const insets = useSafeAreaInsets();
     return (
         <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
-            <Link style={styles.button} href={'/game'}>
+            <Link style={styles.button} href={'/classSelection'}>
                 <Image source={require('./../assets/images/wizard.png')} />
             </Link>
         </View>
