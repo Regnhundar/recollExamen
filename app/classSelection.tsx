@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { useGameStore } from '@/src/stores';
 import { theme } from '@/src/theme';
@@ -30,10 +30,10 @@ export default function classSelection() {
         <SafeAreaView style={styles.classSelectionContainer}>
             <View style={styles.classInfoWrapper}>
                 {classes.map((classItem) => (
-                    <View key={classItem.id} style={styles.classItemContainer}>
+                    <TouchableOpacity key={classItem.id} style={styles.classItemContainer} onPress={handlePlayerSelect}>
                         <Image source={classItem.portrait} style={styles.classInfoImage} />
                         <Text style={styles.classInfoName}>{classItem.name}</Text>
-                    </View>
+                    </TouchableOpacity>
                 ))}
             </View>
         </SafeAreaView>

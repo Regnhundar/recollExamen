@@ -1,34 +1,21 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import GameSquare from './GameSquare';
-
-export default function GameBoard() {
+import { Card } from '@/interfaces';
+interface Props {
+    playerCards: Card[];
+    onPress?: (arg: number) => void;
+}
+export default function GameBoard({ playerCards, onPress }: Props) {
     return (
         <View style={styles.gameBoard}>
-            <GameSquare />
-            <GameSquare />
-            <GameSquare />
-            <GameSquare />
-
-            <GameSquare />
-            <GameSquare />
-            <GameSquare />
-            <GameSquare />
-
-            <GameSquare />
-            <GameSquare />
-            <GameSquare />
-            <GameSquare />
-
-            <GameSquare />
-            <GameSquare />
-            <GameSquare />
-            <GameSquare />
-
-            <GameSquare />
-            <GameSquare />
-            <GameSquare />
-            <GameSquare />
+            {playerCards.map((card) => (
+                <GameSquare
+                    key={card.id}
+                    card={card}
+                    onPress={() => (!card.isFlipped && onPress ? onPress(card.id) : null)}
+                />
+            ))}
         </View>
     );
 }

@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import React from 'react';
 import { theme } from '../theme';
+import { GameClass } from '@/interfaces';
 
 interface Props {
     player: number;
+    classData: GameClass;
 }
-export default function PlayerFrame({ player }: Props) {
+export default function PlayerFrame({ player, classData }: Props) {
     return (
         <View style={[styles.playerFrame, player === 1 ? styles.playerOne : styles.playerTwo]}>
             <View style={styles.portraitWrapper}>
