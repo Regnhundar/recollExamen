@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGameStore } from '@/src/stores';
 import { theme } from '@/src/theme';
 import { GameClass } from '@/interfaces';
 import { classes } from '@/src/game/player/classes';
+import { useRouter } from 'expo-router';
+import TextButton from '@/src/components/TextButton';
 
 export default function classSelection() {
     const [selectedClass, setSelectedClass] = useState<GameClass | null>(null);
     const { setPlayerOne, setPlayerTwo, playerOne, playerTwo, playerTurn, setPlayerTurn } = useGameStore();
+    const router = useRouter();
 
     const handlePlayerSelect = () => {
         if (!selectedClass) {
@@ -26,16 +29,33 @@ export default function classSelection() {
         setSelectedClass(null);
     };
 
+    useEffect(() => {
+        if (playerOne && playerTwo) {
+            router.push('/game');
+        }
+    }, [playerOne, playerTwo]);
+
     return (
         <SafeAreaView style={styles.classSelectionContainer}>
-            <View style={styles.classInfoWrapper}>
-                {classes.map((classItem) => (
-                    <TouchableOpacity key={classItem.id} style={styles.classItemContainer} onPress={handlePlayerSelect}>
-                        <Image source={classItem.portrait} style={styles.classInfoImage} />
-                        <Text style={styles.classInfoName}>{classItem.name}</Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
+            {!selectedClass ? (
+                <View style={styles.classInfoWrapper}>
+                    {classes.map((classItem) => (
+                        <TouchableOpacity
+                            key={classItem.id}
+                            style={styles.classItemContainer}
+                            onPress={() => setSelectedClass(classItem)}>
+                            <Image source={classItem.portrait} style={styles.classInfoImage} />
+                            <Text style={styles.classInfoName}>{classItem.name}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            ) : (
+                <View>
+                    <Text>{selectedClass.name}</Text>
+                    <TextButton text={`Välj ${selectedClass.name}`} onPress={handlePlayerSelect} />
+                    <TextButton text='Tillbaka' type='cancel' onPress={() => setSelectedClass(null)} />
+                </View>
+            )}
         </SafeAreaView>
     );
 }
