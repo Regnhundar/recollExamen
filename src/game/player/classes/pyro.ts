@@ -2,11 +2,14 @@ import { GameClass, Ability } from '../../../../interfaces';
 import { manipulateHealth } from '../abilityFunctions';
 import { getBattleState } from '@/src/stores/battleState';
 import pyroPortrait from '../../../../assets/images/pyro.png';
+import pyroFireball from '../../../../assets/images/abilities/pyro/fire-ball.png';
+import pyroFlameShield from '../../../../assets/images/abilities/pyro/flame-shield.png';
+import pyroBurningHeart from '../../../../assets/images/abilities/pyro/burning-heart.png';
 
 const fireBall: Ability = {
     id: 'fireBall',
     name: 'Fire ball',
-    icon: '../../../../assets/images/abilities/pyro/fire-ball.png',
+    icon: pyroFireball,
     mana: 0,
     cost: 5,
     description: 'Shoot a fireball and deal direct damage leaving a burning DOT.',
@@ -23,7 +26,7 @@ const fireBall: Ability = {
 const flameShield: Ability = {
     id: 'flameShield',
     name: 'Flame shield',
-    icon: '../../../../assets/images/abilities/pyro/flame-shield.png',
+    icon: pyroFlameShield,
     mana: 0,
     cost: 8,
     description: 'Envelop yourself in flames! Attackers take damage for the duration.',
@@ -35,7 +38,7 @@ const flameShield: Ability = {
 const burningHeart: Ability = {
     id: 'burningHeart',
     name: 'Burning heart',
-    icon: '../../../../assets/images/abilities/pyro/burning-heart.svg',
+    icon: pyroBurningHeart,
     mana: 0,
     cost: 12,
     description: 'Shoot a fireball each time you match fireball cards for the duration.',

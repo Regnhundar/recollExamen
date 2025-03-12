@@ -1,7 +1,7 @@
 import { ImageSourcePropType } from 'react-native';
 export interface Ability {
     id: string;
-    icon: string;
+    icon: ImageSourcePropType;
     name: string;
     mana: number;
     cost: number;

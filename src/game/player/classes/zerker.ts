@@ -1,10 +1,13 @@
 import { GameClass, Ability } from '../../../../interfaces/index';
 import zerkerPortrait from '../../../../assets/images/zerker.png';
+import zerkerMadSwing from '../../../../assets/images/abilities/zerker/mad-swing.png';
+import zerkerIgnorePain from '../../../../assets/images/abilities/zerker/ignore-pain.png';
+import zerkerEnrage from '../../../../assets/images/abilities/zerker/enrage.png';
 
 const madSwing: Ability = {
     id: 'wildSwing',
     name: 'Wild swing',
-    icon: '../../../../assets/images/abilities/zerker/mad-swing.png',
+    icon: zerkerMadSwing,
     mana: 0,
     cost: 5,
     description: 'Swing wildly dealing big damage. Sometimes hitting yourself instead!',
@@ -16,7 +19,7 @@ const madSwing: Ability = {
 const ignorePain: Ability = {
     id: 'ignorePain',
     name: 'Ignore pain',
-    icon: '../../../../assets/images/abilities/zerker/ignore-pain.png',
+    icon: zerkerIgnorePain,
     mana: 0,
     cost: 8,
     description: 'Focus your mind and ignore some incoming damage. This ability stacks',
@@ -28,7 +31,7 @@ const ignorePain: Ability = {
 const bloodyNine: Ability = {
     id: 'bloodyNine',
     name: 'Bloody nine!',
-    icon: '../../../../assets/images/abilities/zerker/enrage.png',
+    icon: zerkerEnrage,
     mana: 0,
     cost: 12,
     description: 'Enrage and become posessed by a nine fingered demon! Deal double damage!',

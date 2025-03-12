@@ -59,9 +59,9 @@ export default function Game() {
 
     const updatePlayerCards = (cards: Card[], id: number) => {
         const updatedCards = cards.map((card) => (card.id === id ? { ...card, isFlipped: true } : card));
-        const flippedCard = updatedCards.find((card) => card.id === id); // Hittar vilket kort som precis blev flippat.
+        const flippedCard = updatedCards.find((card) => card.id === id);
         if (flippedCard) {
-            setFlippedCards((prev) => [...prev, flippedCard]); // Pushar in flippade kortet i en array.
+            setFlippedCards((prev) => [...prev, flippedCard]);
         }
         return updatedCards;
     };
