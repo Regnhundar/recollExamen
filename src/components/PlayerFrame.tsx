@@ -11,7 +11,10 @@ export default function PlayerFrame({ player, classData }: Props) {
     return (
         <View style={[styles.playerFrame, player === 1 ? styles.playerOne : styles.playerTwo]}>
             <View style={styles.portraitWrapper}>
-                <Image style={styles.playerPortrait} source={require('../../assets/images/zerker.png')} />
+                <Image
+                    style={styles.playerPortrait}
+                    source={require('../../assets/images/characters/zerker/zerker.png')}
+                />
             </View>
 
             <View style={styles.rightSide}>
@@ -57,10 +60,12 @@ const styles = StyleSheet.create({
     },
     playerOne: {
         marginTop: 'auto',
+        backgroundColor: theme.colors.playerOne,
     },
     playerTwo: {
         marginBottom: 'auto',
         transform: [{ rotate: '180deg' }],
+        backgroundColor: theme.colors.playerTwo,
     },
     portraitWrapper: { height: '100%' },
     playerPortrait: {

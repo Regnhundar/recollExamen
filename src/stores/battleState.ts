@@ -1,4 +1,4 @@
-import { useGameStore } from './index';
+import { useGameStore } from './useGameStore';
 export const getBattleState = () => {
     const { playerTurn, playerOne, playerTwo, setPlayerOne, setPlayerTwo } = useGameStore.getState();
 

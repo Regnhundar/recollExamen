@@ -1,18 +1,19 @@
-import { View, StyleSheet, SafeAreaView, Pressable, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, Pressable, Text } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import PlayerFrame from '@/src/components/PlayerFrame';
 import { theme } from '@/src/theme';
-
 import GameBoard from '@/src/components/GameBoard';
 import { useGameStore } from '@/src/stores';
 import { Card } from '@/interfaces';
 import { createCards, matchCards } from '@/src/game/gameboard/gameBoardFunctions';
+import { useRouter } from 'expo-router';
 
 export default function Game() {
     const { playerOne, setPlayerOne, setPlayerTwo, playerTwo, playerTurn, setPlayerTurn, isGameOver } = useGameStore();
+    const router = useRouter();
     if (!playerOne || !playerTwo) {
         return (
-            <Pressable style={styles.toClassSelect}>
+            <Pressable style={styles.toClassSelect} onPress={() => router.push('/classSelection')}>
                 <Text>Both players have to select a class to start the game...</Text>
             </Pressable>
         );

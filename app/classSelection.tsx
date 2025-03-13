@@ -5,7 +5,7 @@ import { theme } from '@/src/theme';
 import { GameClass } from '@/interfaces';
 import { classes } from '@/src/game/player/classes';
 import { useRouter } from 'expo-router';
-import TextButton from '@/src/components/TextButton';
+import ClassInfo from '@/src/components/ClassInfo';
 
 export default function classSelection() {
     const [selectedClass, setSelectedClass] = useState<GameClass | null>(null);
@@ -50,11 +50,11 @@ export default function classSelection() {
                     ))}
                 </View>
             ) : (
-                <View>
-                    <Text>{selectedClass.name}</Text>
-                    <TextButton text={`Välj ${selectedClass.name}`} onPress={handlePlayerSelect} />
-                    <TextButton text='Tillbaka' type='cancel' onPress={() => setSelectedClass(null)} />
-                </View>
+                <ClassInfo
+                    selectedClass={selectedClass}
+                    setSelectedClass={setSelectedClass}
+                    handlePlayerSelect={handlePlayerSelect}
+                />
             )}
         </SafeAreaView>
     );
@@ -62,18 +62,17 @@ export default function classSelection() {
 
 const styles = StyleSheet.create({
     classSelectionContainer: {
+        padding: theme.spacing.medium,
         backgroundColor: theme.colors.primary,
         flex: 1,
     },
     classInfoWrapper: {
         gap: theme.spacing.large,
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
     classItemContainer: {
         borderWidth: 2,
-
         padding: theme.spacing.large,
         alignItems: 'center',
         justifyContent: 'center',

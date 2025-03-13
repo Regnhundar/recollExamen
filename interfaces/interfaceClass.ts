@@ -12,6 +12,7 @@ export interface Ability {
 export interface GameClass {
     id: string;
     portrait: ImageSourcePropType;
+    fullPicture: ImageSourcePropType;
     name: string;
     maxhp: number;
     hp: number;

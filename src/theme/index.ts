@@ -6,6 +6,8 @@ export const theme = {
         black: '#333',
         danger: '#e74c3c',
         background: '#f5f5f5',
+        playerOne: '#3498db',
+        playerTwo: '#27840F',
     },
     spacing: {
         xxsmall: 2,
