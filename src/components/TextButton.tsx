@@ -12,7 +12,7 @@ const TextButton: React.FC<Props> = ({ text, onPress, type = 'proceed' }) => {
         <TouchableOpacity
             style={[styles.textButton, type === 'proceed' ? styles.proceed : styles.cancel]}
             onPress={onPress}>
-            <Text>{text}</Text>
+            <Text style={styles.textButtonText}>{text.toUpperCase()}</Text>
         </TouchableOpacity>
     );
 };
@@ -22,11 +22,11 @@ export default TextButton;
 const styles = StyleSheet.create({
     textButton: {
         paddingInline: theme.spacing.medium,
-        paddingBlock: theme.spacing.xsmall,
+        paddingBlock: theme.spacing.small,
+        alignSelf: 'flex-start',
     },
-    proceed: {
-        backgroundColor: 'green',
-    },
+    textButtonText: { fontWeight: 600, fontSize: theme.fontSize.medium },
+    proceed: { backgroundColor: 'green' },
     cancel: {
         backgroundColor: 'red',
     },

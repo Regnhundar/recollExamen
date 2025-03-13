@@ -1,5 +1,6 @@
 import { GameClass, Ability } from '../../../../interfaces/index';
-import zerkerPortrait from '../../../../assets/images/zerker.png';
+import zerkerPortrait from '../../../../assets/images/characters/zerker/zerker.png';
+import zerkerFull from '../../../../assets/images/characters/zerker/zerker-full.png';
 import zerkerMadSwing from '../../../../assets/images/abilities/zerker/mad-swing.png';
 import zerkerIgnorePain from '../../../../assets/images/abilities/zerker/ignore-pain.png';
 import zerkerEnrage from '../../../../assets/images/abilities/zerker/enrage.png';
@@ -44,6 +45,7 @@ export const zerkerClass: GameClass = {
     id: 'zerker',
     name: 'Zerker',
     portrait: zerkerPortrait,
+    fullPicture: zerkerFull,
     maxhp: 120,
     hp: 120,
     description: 'Hard hitting lunatic that can take a punch. Sometimes from himself!',
