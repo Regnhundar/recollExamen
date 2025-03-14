@@ -15,8 +15,9 @@ export default function PlayerFrame({ player, classData }: Props) {
             </View>
 
             <View style={styles.rightSide}>
-                <View style={styles.healthbar}>
+                <View style={styles.healthbarWrapper}>
                     <Text style={styles.healthNumber}>{classData.hp}</Text>
+                    <View style={[styles.healthBar, { width: `${(classData.hp / classData.maxhp) * 100}%` }]}></View>
                 </View>
                 <View style={styles.abilityButtonContainer}>
                     {classData.abilities.map((ability) => (
@@ -24,7 +25,7 @@ export default function PlayerFrame({ player, classData }: Props) {
                             key={`${ability.id}-${player}`}
                             style={styles.abilityButton}
                             onPress={ability.execute}>
-                            <Image source={ability.icon} style={styles.icon} />
+                            <Image source={ability.icon} style={styles.abilityIcon} />
                             <Text style={styles.abilityMana}>{`${ability.mana}/${ability.cost}`}</Text>
                         </Pressable>
                     ))}
@@ -37,12 +38,12 @@ export default function PlayerFrame({ player, classData }: Props) {
 const styles = StyleSheet.create({
     playerFrame: {
         width: '100%',
-        height: '20%',
+        height: '18%',
         flexDirection: 'row',
         alignItems: 'center',
         flexWrap: 'nowrap',
         paddingInline: theme.spacing.small,
-        paddingBlock: theme.spacing.large,
+        paddingBlock: theme.spacing.medium,
         gap: theme.spacing.small,
         backgroundColor: theme.colors.primary,
     },
@@ -60,26 +61,36 @@ const styles = StyleSheet.create({
         maxHeight: '100%',
         aspectRatio: 1,
         objectFit: 'contain',
-        backgroundColor: 'white',
+        backgroundColor: theme.colors.white,
     },
     rightSide: {
         flex: 1,
         gap: theme.spacing.xxsmall,
     },
-    healthbar: {
+    healthbarWrapper: {
+        position: 'relative',
         flex: 1,
-        height: '50%',
-        backgroundColor: 'green',
+        height: '40%',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: theme.borderWidth.medium,
+        backgroundColor: 'red',
     },
+    healthBar: {
+        position: 'absolute',
+        backgroundColor: 'green',
+        zIndex: 9,
+        height: '100%',
+        left: 0,
+    },
+
     healthNumber: {
         color: theme.colors.white,
         fontWeight: 600,
+        zIndex: 999,
     },
     abilityButtonContainer: {
-        height: '50%',
+        height: '60%',
         flexDirection: 'row',
         columnGap: theme.spacing.xxsmall,
     },
@@ -91,8 +102,15 @@ const styles = StyleSheet.create({
         borderWidth: theme.spacing.xxsmall,
         backgroundColor: 'beige',
         gap: 2,
-        padding: theme.spacing.small,
     },
-    abilityMana: { position: 'absolute', bottom: 2, left: 2 },
-    icon: { resizeMode: 'contain', height: '80%', width: '80%' },
+    abilityMana: {
+        position: 'absolute',
+        bottom: '-15%',
+        left: '50%',
+        transform: [{ translateX: '-50%' }, { translateY: '15%' }],
+        backgroundColor: theme.colors.black,
+        fontWeight: 600,
+        color: theme.colors.white,
+    },
+    abilityIcon: { resizeMode: 'contain', height: '80%', width: '80%' },
 });
