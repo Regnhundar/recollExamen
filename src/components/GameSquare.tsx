@@ -28,7 +28,13 @@ export default function GameSquare({ card, onPress }: Props) {
 }
 
 const styles = StyleSheet.create({
-    gameSquare: { backgroundColor: theme.colors.secondary, aspectRatio: 1, width: '40%', padding: theme.spacing.large },
+    gameSquare: {
+        backgroundColor: theme.colors.secondary,
+        aspectRatio: 1,
+        width: '40%',
+        padding: theme.spacing.large,
+        ...theme.shadows.bigButton,
+    },
 
     gameSquarePlayerOne: {
         backgroundColor: theme.colors.playerOne,

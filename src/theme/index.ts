@@ -31,4 +31,13 @@ export const theme = {
         medium: 16,
         large: 24,
     },
+    shadows: {
+        bigButton: {
+            shadowColor: 'black',
+            shadowOffset: { width: -3, height: -3 },
+            shadowOpacity: 1,
+            shadowRadius: 1, // "blur"
+            elevation: 15, // för android
+        },
+    },
 };
