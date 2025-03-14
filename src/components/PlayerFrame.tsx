@@ -11,35 +11,23 @@ export default function PlayerFrame({ player, classData }: Props) {
     return (
         <View style={[styles.playerFrame, player === 1 ? styles.playerOne : styles.playerTwo]}>
             <View style={styles.portraitWrapper}>
-                <Image
-                    style={styles.playerPortrait}
-                    source={require('../../assets/images/characters/zerker/zerker.png')}
-                />
+                <Image style={styles.playerPortrait} source={classData.portrait} />
             </View>
 
             <View style={styles.rightSide}>
                 <View style={styles.healthbar}>
-                    <Text style={styles.healthNumber}>100</Text>
+                    <Text style={styles.healthNumber}>{classData.hp}</Text>
                 </View>
-                <View style={styles.buttonContainer}>
-                    <Pressable style={styles.button} onPress={() => console.log('MAD SWING!')}>
-                        <Image
-                            source={require('../../assets/images/abilities/zerker/mad-swing.png')}
-                            style={styles.icon}
-                        />
-                    </Pressable>
-                    <Pressable style={styles.button} onPress={() => console.log('IGNORE PAIN')}>
-                        <Image
-                            source={require('../../assets/images/abilities/zerker/ignore-pain.png')}
-                            style={styles.icon}
-                        />
-                    </Pressable>
-                    <Pressable style={styles.button} onPress={() => console.log('ENRAGE')}>
-                        <Image
-                            source={require('../../assets/images/abilities/zerker/enrage.png')}
-                            style={styles.icon}
-                        />
-                    </Pressable>
+                <View style={styles.abilityButtonContainer}>
+                    {classData.abilities.map((ability) => (
+                        <Pressable
+                            key={`${ability.id}-${player}`}
+                            style={styles.abilityButton}
+                            onPress={ability.execute}>
+                            <Image source={ability.icon} style={styles.icon} />
+                            <Text style={styles.abilityMana}>{`${ability.mana}/${ability.cost}`}</Text>
+                        </Pressable>
+                    ))}
                 </View>
             </View>
         </View>
@@ -90,17 +78,21 @@ const styles = StyleSheet.create({
         color: theme.colors.white,
         fontWeight: 600,
     },
-    buttonContainer: {
+    abilityButtonContainer: {
         height: '50%',
         flexDirection: 'row',
         columnGap: theme.spacing.xxsmall,
     },
-    button: {
+    abilityButton: {
+        position: 'relative',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: theme.spacing.xxsmall,
         backgroundColor: 'beige',
+        gap: 2,
+        padding: theme.spacing.small,
     },
-    icon: { objectFit: 'contain' },
+    abilityMana: { position: 'absolute', bottom: 2, left: 2 },
+    icon: { resizeMode: 'contain', height: '80%', width: '80%' },
 });
