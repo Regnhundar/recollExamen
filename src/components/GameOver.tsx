@@ -6,7 +6,7 @@ import TextButton from './TextButton';
 
 interface Props {}
 const GameOver: React.FC<Props> = () => {
-    const { playerOne, playerTwo, setPlayerOne, setPlayerTwo, setIsGameOver, setPlayerTurn } = useGameStore();
+    const { playerOne, playerTwo, setIsGameOver, setPlayerTurn } = useGameStore();
     const players = playerOne !== null && playerTwo !== null;
     const router = useRouter();
     const winner = players ? (playerOne?.hp > playerTwo?.hp ? 'Player one wins!' : 'Player two wins!') : 'Error!';
@@ -22,7 +22,7 @@ const GameOver: React.FC<Props> = () => {
             <Text>{winner}</Text>
 
             <View style={styles.gameOverButtonWrapper}>
-                <TextButton text={'spela igen'} onPress={handleRematch}></TextButton>
+                <TextButton text={'spela igen'} onPress={handleRematch} />
             </View>
         </View>
     );

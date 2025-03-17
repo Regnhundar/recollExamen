@@ -36,6 +36,10 @@ export default function Game() {
     }, [playerTurn]); // Resettar states när turn ändras
 
     useEffect(() => {
+        console.log(playerTwo.debuffs);
+    }, [playerTwo.debuffs]);
+
+    useEffect(() => {
         if (flippedCards.length >= 2 && flippedCards.length % 2 === 0) {
             const player = playerTurn === 1 ? playerOne : playerTwo;
             const matchResult = matchCards(flippedCards, player);

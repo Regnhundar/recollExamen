@@ -7,6 +7,7 @@ const defaultAbility: Ability = {
     icon: fallback,
     mana: 0,
     cost: 8,
+    baseDamage: 0,
     description: 'Do nothing!',
     execute: () => {
         console.log('Default ability pressed!');
@@ -20,6 +21,8 @@ export const defaultClass: GameClass = {
     fullPicture: fallback,
     maxhp: 100,
     hp: 100,
+    buffs: [],
+    debuffs: [],
     description: 'I am an unselected class',
     abilities: [defaultAbility, defaultAbility, defaultAbility],
 };
