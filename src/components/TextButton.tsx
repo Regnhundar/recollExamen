@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableHighlight } from 'react-native';
 import React from 'react';
 import { theme } from '../theme';
 
@@ -9,11 +9,11 @@ interface Props {
 }
 const TextButton: React.FC<Props> = ({ text, onPress, type = 'proceed' }) => {
     return (
-        <TouchableOpacity
+        <TouchableHighlight
             style={[styles.textButton, type === 'proceed' ? styles.proceed : styles.cancel]}
             onPress={onPress}>
             <Text style={styles.textButtonText}>{text.toUpperCase()}</Text>
-        </TouchableOpacity>
+        </TouchableHighlight>
     );
 };
 

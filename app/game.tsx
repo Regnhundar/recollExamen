@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, Pressable, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, Pressable, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import PlayerFrame from '@/src/components/PlayerFrame';
 import { theme } from '@/src/theme';
@@ -7,17 +7,11 @@ import { useGameStore } from '@/src/stores';
 import { Card } from '@/interfaces';
 import { createCards, matchCards } from '@/src/game/gameboard/gameBoardFunctions';
 import { useRouter } from 'expo-router';
+import GameOver from '@/src/components/GameOver';
 
 export default function Game() {
     const { playerOne, setPlayerOne, setPlayerTwo, playerTwo, playerTurn, setPlayerTurn, isGameOver } = useGameStore();
     const router = useRouter();
-    if (!playerOne || !playerTwo) {
-        return (
-            <Pressable style={styles.toClassSelect} onPress={() => router.push('/classSelection')}>
-                <Text>Both players have to select a class to start the game...</Text>
-            </Pressable>
-        );
-    }
 
     const [flippedCards, setFlippedCards] = useState<Card[]>([]);
     const [isBoardActive, setIsBoardActive] = useState(true);
@@ -26,6 +20,13 @@ export default function Game() {
     const [playerOneCards, setPlayerOneCards] = useState<Card[]>(playerOneDeck);
     const [playerTwoCards, setPlayerTwoCards] = useState<Card[]>(playerTwoDeck);
 
+    if (playerOne.id === 'default' || playerTwo.id === 'default') {
+        return (
+            <Pressable style={styles.toClassSelect} onPress={() => router.push('/classSelection')}>
+                <Text>Both players have to select a class to start the game...</Text>
+            </Pressable>
+        );
+    }
     useEffect(() => {
         setFlippedCards([]);
         const unFlipCards = (cards: Card[]) => cards.map((card) => ({ ...card, isFlipped: false }));
@@ -77,14 +78,20 @@ export default function Game() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <PlayerFrame player={2} classData={playerTwo} />
+            {isGameOver ? (
+                <GameOver />
+            ) : (
+                <>
+                    <PlayerFrame player={2} classData={playerTwo} />
 
-            <GameBoard
-                playerCards={playerTurn === 1 ? playerOneCards : playerTwoCards}
-                onPress={isBoardActive ? handleFlip : undefined}
-            />
+                    <GameBoard
+                        playerCards={playerTurn === 1 ? playerOneCards : playerTwoCards}
+                        onPress={isBoardActive ? handleFlip : undefined}
+                    />
 
-            <PlayerFrame player={1} classData={playerOne} />
+                    <PlayerFrame player={1} classData={playerOne} />
+                </>
+            )}
         </SafeAreaView>
     );
 }
