@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from 'r
 import React, { useEffect, useState } from 'react';
 import { useGameStore } from '@/src/stores';
 import { theme } from '@/src/theme';
-import { GameClass } from '@/interfaces';
+import { Ability, GameClass } from '@/interfaces';
 import { classes } from '@/src/game/player/classes';
 import { useRouter } from 'expo-router';
 import ClassInfo from '@/src/components/ClassInfo';
@@ -16,24 +16,25 @@ export default function classSelection() {
         if (!selectedClass) {
             return console.error('No class selected!');
         }
-        const selectedPlayer = {
+        const resetAbilities = selectedClass.abilities.map((ability) => ({ ...ability, mana: 0 })) as [
+            Ability,
+            Ability,
+            Ability
+        ];
+        const selectedPlayerClass = {
             ...selectedClass,
             hp: selectedClass.maxhp,
+            abilities: resetAbilities,
         };
         if (playerTurn === 1) {
-            setPlayerOne(selectedPlayer);
+            setPlayerOne(selectedPlayerClass);
         } else {
-            setPlayerTwo(selectedPlayer);
+            setPlayerTwo(selectedPlayerClass);
+            router.push('/game');
         }
         setPlayerTurn((prev) => (prev === 1 ? 2 : 1));
         setSelectedClass(null);
     };
-
-    useEffect(() => {
-        if (playerOne && playerTwo) {
-            router.push('/game');
-        }
-    }, [playerOne, playerTwo]);
 
     return (
         <SafeAreaView style={styles.classSelectionContainer}>
