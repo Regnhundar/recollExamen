@@ -43,7 +43,7 @@ export default function classSelection() {
     };
 
     return (
-        <SafeAreaView style={styles.classSelectionContainer}>
+        <SafeAreaView style={[styles.classSelectionContainer, playerTurn === 1 ? styles.playerOne : styles.playerTwo]}>
             {!selectedClass ? (
                 <View style={styles.classInfoWrapper}>
                     {classes.map((classItem) => (
@@ -70,8 +70,15 @@ export default function classSelection() {
 const styles = StyleSheet.create({
     classSelectionContainer: {
         padding: theme.spacing.medium,
-        backgroundColor: theme.colors.primary,
+
         flex: 1,
+    },
+    playerOne: {
+        backgroundColor: theme.colors.playerOne,
+    },
+    playerTwo: {
+        transform: [{ rotate: '180deg' }],
+        backgroundColor: theme.colors.playerTwo,
     },
     classInfoWrapper: {
         gap: theme.spacing.large,

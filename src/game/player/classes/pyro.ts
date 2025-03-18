@@ -18,14 +18,12 @@ export const fireBall: Ability = {
     description: `Shoot a fireball and deal direct damage that makes your enemy burn for ${burn.duration} turns.`,
     execute: () => {
         const { opponent, setOpponent, player, setPlayer } = getBattleState();
-        const isBurningHeartActive = player.buffs.some((buff) => buff.id === 'burningHeartBuff');
+
         const damagedOpponent = manipulateHealth({ target: opponent, operator: '-', amount: fireBall.baseDamage });
-        if (!isBurningHeartActive) {
-            const updatedAbilityMana = updateAbilityMana(player.abilities, 'fireBall');
-            setPlayer({ ...player, abilities: updatedAbilityMana });
-        }
+        const updatedAbilityMana = updateAbilityMana(player.abilities, 'fireBall');
         const newStatusArray = applyStatusEffect(opponent.debuffs, burn);
 
+        setPlayer({ ...player, abilities: updatedAbilityMana });
         setOpponent({ ...opponent, hp: damagedOpponent, debuffs: newStatusArray });
     },
 };
@@ -61,11 +59,27 @@ const burninate: Ability = {
     },
 };
 
+const freeBall: Ability = {
+    id: 'fireBall',
+    name: 'Freeball',
+    icon: pyroFireball,
+    mana: 0,
+    cost: 0,
+    baseDamage: 10,
+    description: `This is the free version of fireball that triggers by matching fireball cards`,
+    execute: () => {
+        const { opponent, setOpponent } = getBattleState();
+        const damagedOpponent = manipulateHealth({ target: opponent, operator: '-', amount: fireBall.baseDamage });
+        const newStatusArray = applyStatusEffect(opponent.debuffs, burn);
+        setOpponent({ ...opponent, hp: damagedOpponent, debuffs: newStatusArray });
+    },
+};
+
 const burningHeartBuff: Buff = {
     id: 'burningHeartBuff',
     duration: 5,
     isTriggeringAbilityOnMatch: true,
-    abilityToTrigger: fireBall,
+    abilityToTrigger: freeBall,
 };
 
 const burningHeart: Ability = {
