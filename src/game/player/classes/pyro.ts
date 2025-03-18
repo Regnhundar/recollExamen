@@ -6,36 +6,66 @@ import pyroFireball from '../../../../assets/images/abilities/pyro/fire-ball.png
 import pyroFlameShield from '../../../../assets/images/abilities/pyro/flame-shield.png';
 import pyroBurningHeart from '../../../../assets/images/abilities/pyro/burning-heart.png';
 import { burn } from '../statusEffects';
+import { Buff } from '@/interfaces/interfaceStatusEffects';
 
-const fireBall: Ability = {
+export const fireBall: Ability = {
     id: 'fireBall',
-    name: 'Fire ball',
+    name: 'Fireball',
     icon: pyroFireball,
     mana: 0,
-    cost: 1,
+    cost: 3,
     baseDamage: 10,
-    description: 'Shoot a fireball and deal direct damage leaving a burning DOT.',
+    description: `Shoot a fireball and deal direct damage that makes your enemy burn for ${burn.duration} turns.`,
     execute: () => {
         const { opponent, setOpponent, player, setPlayer } = getBattleState();
+        const isBurningHeartActive = player.buffs.some((buff) => buff.id === 'burningHeartBuff');
         const damagedOpponent = manipulateHealth({ target: opponent, operator: '-', amount: fireBall.baseDamage });
-        const updatedAbilityMana = updateAbilityMana(player.abilities, 'fireBall');
+        if (!isBurningHeartActive) {
+            const updatedAbilityMana = updateAbilityMana(player.abilities, 'fireBall');
+            setPlayer({ ...player, abilities: updatedAbilityMana });
+        }
         const newStatusArray = applyStatusEffect(opponent.debuffs, burn);
-        setPlayer({ ...player, abilities: updatedAbilityMana });
+
         setOpponent({ ...opponent, hp: damagedOpponent, debuffs: newStatusArray });
     },
 };
 
-const flameShield: Ability = {
-    id: 'flameShield',
-    name: 'Flame shield',
+const burninate: Ability = {
+    id: 'burninate',
+    name: 'Burninate',
     icon: pyroFlameShield,
     mana: 0,
     cost: 5,
-    baseDamage: 0,
-    description: 'Envelop yourself in flames! Attackers take damage for the duration.',
+    baseDamage: 5,
+    description: 'Enemy burning? Consume burn to deal BIG DAMAGE! Not burning? Meh. Small damage.',
     execute: () => {
-        console.log('Flame shield pressed!');
+        const { opponent, setOpponent, player, setPlayer } = getBattleState();
+
+        const existingBurn = opponent.debuffs.find((debuff) => debuff.id === 'burn');
+
+        const damagedOpponent = manipulateHealth({
+            target: opponent,
+            operator: '-',
+            amount: existingBurn ? burninate.baseDamage * existingBurn.duration : burninate.baseDamage,
+        });
+
+        if (existingBurn) {
+            const removeBurnFromDebuffs = opponent.debuffs.filter((debuff) => debuff.id !== 'burn');
+            setOpponent({ ...opponent, hp: damagedOpponent, debuffs: removeBurnFromDebuffs });
+        } else {
+            setOpponent({ ...opponent, hp: damagedOpponent });
+        }
+
+        const updatedAbilityMana = updateAbilityMana(player.abilities, 'burninate');
+        setPlayer({ ...player, abilities: updatedAbilityMana });
     },
+};
+
+const burningHeartBuff: Buff = {
+    id: 'burningHeartBuff',
+    duration: 5,
+    isTriggeringAbilityOnMatch: true,
+    abilityToTrigger: fireBall,
 };
 
 const burningHeart: Ability = {
@@ -45,9 +75,13 @@ const burningHeart: Ability = {
     mana: 0,
     cost: 8,
     baseDamage: 0,
-    description: 'Shoot a fireball each time you match fireball cards for the duration.',
+    description: `Shoot a fireball each time you match fireball cards for ${burningHeartBuff.duration} turns.`,
     execute: () => {
-        console.log('Burning heart');
+        const { player, setPlayer } = getBattleState();
+
+        const updatedAbilityMana = updateAbilityMana(player.abilities, 'burningHeart');
+        const newStatusArray = applyStatusEffect(player.buffs, burningHeartBuff);
+        setPlayer({ ...player, abilities: updatedAbilityMana, buffs: newStatusArray });
     },
 };
 
@@ -61,5 +95,5 @@ export const pyroClass: GameClass = {
     buffs: [],
     debuffs: [],
     description: 'Spreads his love of fire with fiery destruction!',
-    abilities: [fireBall, flameShield, burningHeart],
+    abilities: [fireBall, burninate, burningHeart],
 };

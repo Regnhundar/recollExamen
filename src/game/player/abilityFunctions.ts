@@ -1,6 +1,6 @@
 import { Buff, Debuff } from '@/interfaces/interfaceStatusEffects';
 import { Ability, GameClass } from '../../../interfaces';
-import { useGameStore } from '../../stores';
+import { getBattleState, useGameStore } from '../../stores';
 
 const { setIsGameOver } = useGameStore.getState();
 interface Health {
@@ -41,9 +41,7 @@ export const updateAbilityMana = (abilityArray: [Ability, Ability, Ability], abi
 };
 
 export const applyStatusEffect = (statusArray: Buff[] | Debuff[], newStatus: Buff | Debuff) => {
-    const indexOfStatusToRefresh = statusArray.findIndex(
-        (indexOfStatusToRefresh) => indexOfStatusToRefresh.id === newStatus.id
-    );
+    const indexOfStatusToRefresh = statusArray.findIndex((existingStatus) => existingStatus.id === newStatus.id);
 
     if (indexOfStatusToRefresh !== -1) {
         const updatedStatusArray = statusArray.map((status, i) =>
@@ -55,3 +53,41 @@ export const applyStatusEffect = (statusArray: Buff[] | Debuff[], newStatus: Buf
     const newStatusArray = [...statusArray, newStatus];
     return newStatusArray;
 };
+
+export const executeStatusEffects = () => {
+    const { player } = getBattleState();
+    const buffsToExecute = player.buffs.filter((buff) => buff.execute);
+    const debuffsToExecute = player.debuffs.filter((debuff) => debuff.execute);
+
+    if (buffsToExecute.length > 0) {
+        buffsToExecute.forEach((buff) => buff.execute!());
+    }
+
+    if (debuffsToExecute.length > 0) {
+        debuffsToExecute.forEach((debuff) => debuff.execute!());
+    }
+    updateStatusDurations(player);
+};
+
+const updateStatusDurations = (player: GameClass) => {
+    const { setPlayer } = getBattleState();
+
+    const updatedBuffDurations = player.buffs
+        .filter((buff) => buff.duration > 1)
+        .map((buff) => ({ ...buff, duration: buff.duration - 1 }));
+
+    const updatedDebuffDurations = player.debuffs
+        .filter((debuff) => debuff.duration > 1)
+        .map((debuff) => ({ ...debuff, duration: debuff.duration - 1 }));
+
+    setPlayer({ ...player, buffs: updatedBuffDurations, debuffs: updatedDebuffDurations });
+};
+
+// const executeAbilityOnMatch = (abilityID: string) => {
+//     const triggeringAbilities = [{ abilityID: 'fireBall', executeAbility: fireBall.execute }];
+//     const abilityToTrigger = triggeringAbilities.find((ability) => ability.abilityID === abilityID);
+
+//     if (abilityToTrigger) {
+//         abilityToTrigger.executeAbility();
+//     }
+// };

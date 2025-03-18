@@ -9,8 +9,12 @@ import ClassInfo from '@/src/components/ClassInfo';
 
 export default function classSelection() {
     const [selectedClass, setSelectedClass] = useState<GameClass | null>(null);
-    const { setPlayerOne, setPlayerTwo, playerOne, playerTwo, playerTurn, setPlayerTurn } = useGameStore();
+    const { setPlayerOne, setPlayerTwo, playerTurn, setPlayerTurn } = useGameStore();
     const router = useRouter();
+
+    useEffect(() => {
+        setPlayerTurn(1);
+    }, []);
 
     const handlePlayerSelect = () => {
         if (!selectedClass) {
@@ -25,6 +29,8 @@ export default function classSelection() {
             ...selectedClass,
             hp: selectedClass.maxhp,
             abilities: resetAbilities,
+            buffs: [],
+            debuffs: [],
         };
         if (playerTurn === 1) {
             setPlayerOne(selectedPlayerClass);

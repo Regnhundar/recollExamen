@@ -13,7 +13,7 @@ const wildSwing: Ability = {
     name: 'Wild swing',
     icon: zerkerMadSwing,
     mana: 0,
-    cost: 1,
+    cost: 3,
     baseDamage: 20,
     description: 'Swing wildly dealing big damage. Sometimes hitting yourself instead!',
     execute: () => {
@@ -46,19 +46,19 @@ const eatALeg: Ability = {
         setPlayer({ ...player, hp: healedSelf, abilities: updatedAbilityMana });
     },
 };
+const bloodyNineBuff: Buff = { id: 'bloodyNine', duration: 5, damageIncrease: 1 };
 
 const bloodyNine: Ability = {
     id: 'bloodyNine',
     name: 'Bloody nine!',
     icon: zerkerEnrage,
     mana: 0,
-    cost: 1,
+    cost: 8,
     baseDamage: 0,
     description: 'Enrage and become posessed by a nine fingered demon! Deal double damage!',
     execute: () => {
         const { player, setPlayer } = getBattleState();
-        const enrage: Buff = { id: 'bloodyNine', duration: 3, damageIncrease: 1 };
-        const newStatusArray = applyStatusEffect(player.buffs, enrage);
+        const newStatusArray = applyStatusEffect(player.buffs, bloodyNineBuff);
         const updatedAbilityMana = updateAbilityMana(player.abilities, 'bloodyNine');
         setPlayer({ ...player, buffs: newStatusArray, abilities: updatedAbilityMana });
     },

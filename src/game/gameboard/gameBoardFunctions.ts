@@ -8,10 +8,11 @@ export const createCards = (array: Ability[]): Card[] => {
     for (let i = 0; i < doubledCards.length; i++) {
         const newCard: Card = {
             id: cards.length + 1,
-            name: doubledCards[i].name,
+            name: doubledCards[i].id,
             icon: doubledCards[i].icon,
             isFlipped: false,
         };
+
         cards.push(newCard);
     }
     const shuffledCards = fisherYatesShuffle(cards);
@@ -28,6 +29,10 @@ export const matchCards = (
     if (cardOne === cardTwo) {
         let updatedPlayer = { ...player };
         const updatedSkills = awardMana(updatedPlayer, cardTwo, flippedCards);
+        const triggerAbility = triggerOnMatch(cardTwo, player);
+        if (triggerAbility) {
+            triggerAbility.abilityToTrigger?.execute();
+        }
         updatedPlayer.abilities = updatedSkills;
 
         return { success: true, cards: flippedCards, player: updatedPlayer };
@@ -37,14 +42,10 @@ export const matchCards = (
     }
 };
 
-export const awardMana = (
-    player: GameClass,
-    abilityName: string,
-    flippedCards: Card[]
-): [Ability, Ability, Ability] => {
+export const awardMana = (player: GameClass, abilityID: string, flippedCards: Card[]): [Ability, Ability, Ability] => {
     const amountToReward = flippedCards.length / 2;
     const abilities: [Ability, Ability, Ability] = [...player.abilities];
-    const abilityIndex = abilities.findIndex((ability) => ability.name === abilityName);
+    const abilityIndex = abilities.findIndex((ability) => ability.id === abilityID);
 
     const abilityToReward = { ...abilities[abilityIndex] };
     const newMana = Math.min(abilityToReward.mana + amountToReward, abilityToReward.cost);
@@ -53,4 +54,14 @@ export const awardMana = (
     abilities[abilityIndex] = abilityToReward;
 
     return abilities;
+};
+
+const triggerOnMatch = (matchingCard: string, player: GameClass) => {
+    const triggeringBuff = player.buffs.find(
+        (buff) => buff.isTriggeringAbilityOnMatch && buff.abilityToTrigger?.id === matchingCard
+    );
+    if (triggeringBuff) {
+        return triggeringBuff;
+    }
+    return null;
 };
