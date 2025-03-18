@@ -9,8 +9,12 @@ import ClassInfo from '@/src/components/ClassInfo';
 
 export default function classSelection() {
     const [selectedClass, setSelectedClass] = useState<GameClass | null>(null);
-    const { setPlayerOne, setPlayerTwo, playerOne, playerTwo, playerTurn, setPlayerTurn } = useGameStore();
+    const { setPlayerOne, setPlayerTwo, playerTurn, setPlayerTurn } = useGameStore();
     const router = useRouter();
+
+    useEffect(() => {
+        setPlayerTurn(1);
+    }, []);
 
     const handlePlayerSelect = () => {
         if (!selectedClass) {
@@ -25,6 +29,8 @@ export default function classSelection() {
             ...selectedClass,
             hp: selectedClass.maxhp,
             abilities: resetAbilities,
+            buffs: [],
+            debuffs: [],
         };
         if (playerTurn === 1) {
             setPlayerOne(selectedPlayerClass);
@@ -37,7 +43,7 @@ export default function classSelection() {
     };
 
     return (
-        <SafeAreaView style={styles.classSelectionContainer}>
+        <SafeAreaView style={[styles.classSelectionContainer, playerTurn === 1 ? styles.playerOne : styles.playerTwo]}>
             {!selectedClass ? (
                 <View style={styles.classInfoWrapper}>
                     {classes.map((classItem) => (
@@ -64,8 +70,15 @@ export default function classSelection() {
 const styles = StyleSheet.create({
     classSelectionContainer: {
         padding: theme.spacing.medium,
-        backgroundColor: theme.colors.primary,
+
         flex: 1,
+    },
+    playerOne: {
+        backgroundColor: theme.colors.playerOne,
+    },
+    playerTwo: {
+        transform: [{ rotate: '180deg' }],
+        backgroundColor: theme.colors.playerTwo,
     },
     classInfoWrapper: {
         gap: theme.spacing.large,

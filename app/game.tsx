@@ -3,14 +3,16 @@ import React, { useEffect, useState } from 'react';
 import PlayerFrame from '@/src/components/PlayerFrame';
 import { theme } from '@/src/theme';
 import GameBoard from '@/src/components/GameBoard';
-import { useGameStore } from '@/src/stores';
+import { getBattleState, useGameStore } from '@/src/stores';
 import { Card } from '@/interfaces';
 import { createCards, matchCards } from '@/src/game/gameboard/gameBoardFunctions';
 import { useRouter } from 'expo-router';
 import GameOver from '@/src/components/GameOver';
+import { executeStatusEffects } from '@/src/game/player/abilityFunctions';
 
 export default function Game() {
     const { playerOne, setPlayerOne, setPlayerTwo, playerTwo, playerTurn, setPlayerTurn, isGameOver } = useGameStore();
+    const { opponent, setOpponent, player, setPlayer } = getBattleState();
     const router = useRouter();
 
     const [flippedCards, setFlippedCards] = useState<Card[]>([]);
@@ -33,7 +35,10 @@ export default function Game() {
         setPlayerOneCards((prev) => unFlipCards(prev));
         setPlayerTwoCards((prev) => unFlipCards(prev));
         setIsBoardActive(true);
-    }, [playerTurn]); // Resettar states när turn ändras
+        if (player.buffs.length > 0 || player.debuffs.length > 0) {
+            executeStatusEffects();
+        }
+    }, [playerTurn]); // Resettar states när turn ändras och kör debuffs/buffs
 
     useEffect(() => {
         if (flippedCards.length >= 2 && flippedCards.length % 2 === 0) {

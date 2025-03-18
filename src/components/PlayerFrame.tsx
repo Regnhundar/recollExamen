@@ -2,12 +2,14 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import React from 'react';
 import { theme } from '../theme';
 import { GameClass } from '@/interfaces';
+import { useGameStore } from '../stores';
 
 interface Props {
     player: number;
     classData: GameClass;
 }
 export default function PlayerFrame({ player, classData }: Props) {
+    const { playerTurn } = useGameStore();
     return (
         <View style={[styles.playerFrame, player === 1 ? styles.playerOne : styles.playerTwo]}>
             <View style={styles.portraitWrapper}>
@@ -24,7 +26,9 @@ export default function PlayerFrame({ player, classData }: Props) {
                         <Pressable
                             key={`${ability.id}-${player}`}
                             style={styles.abilityButton}
-                            onPress={ability.execute}>
+                            onPress={
+                                playerTurn === player && ability.mana === ability.cost ? ability.execute : undefined
+                            }>
                             <Image source={ability.icon} style={styles.abilityIcon} />
                             <Text style={styles.abilityMana}>{`${ability.mana}/${ability.cost}`}</Text>
                         </Pressable>

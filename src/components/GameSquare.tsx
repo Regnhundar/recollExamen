@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
         width: '40%',
         padding: theme.spacing.large,
-        ...theme.shadows.bigButton,
     },
 
     gameSquarePlayerOne: {

@@ -2,13 +2,15 @@ import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import GameSquare from './GameSquare';
 import { Card } from '@/interfaces';
+import { useGameStore } from '../stores';
 interface Props {
     playerCards: Card[];
     onPress?: (arg: number) => void;
 }
 export default function GameBoard({ playerCards, onPress }: Props) {
+    const { playerTurn } = useGameStore();
     return (
-        <View style={styles.gameBoard}>
+        <View style={[styles.gameBoard, playerTurn === 2 && styles.playerTwo]}>
             {playerCards.map((card) => (
                 <GameSquare
                     key={card.id}
@@ -28,5 +30,8 @@ const styles = StyleSheet.create({
         marginBlock: 'auto',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    playerTwo: {
+        transform: [{ rotate: '180deg' }],
     },
 });
