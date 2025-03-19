@@ -13,7 +13,7 @@ const wildSwing: Ability = {
     name: 'Wild swing',
     icon: zerkerMadSwing,
     mana: 0,
-    cost: 3,
+    cost: 0,
     baseDamage: 20,
     description: 'Swing wildly dealing big damage. Sometimes hitting yourself instead!',
     execute: () => {
