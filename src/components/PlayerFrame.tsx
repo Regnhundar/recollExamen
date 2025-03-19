@@ -3,6 +3,7 @@ import React from 'react';
 import { theme } from '../theme';
 import { GameClass } from '@/interfaces';
 import { useGameStore } from '../stores';
+import StatusTracker from './StatusTracker';
 
 interface Props {
     player: number;
@@ -13,7 +14,9 @@ export default function PlayerFrame({ player, classData }: Props) {
     return (
         <View style={[styles.playerFrame, player === 1 ? styles.playerOne : styles.playerTwo]}>
             <View style={styles.portraitWrapper}>
+                <StatusTracker type={'buff'} statusArray={classData.buffs} />
                 <Image style={styles.playerPortrait} source={classData.portrait} />
+                <StatusTracker type={'debuff'} statusArray={classData.debuffs} />
             </View>
 
             <View style={styles.rightSide}>
@@ -60,12 +63,11 @@ const styles = StyleSheet.create({
         transform: [{ rotate: '180deg' }],
         backgroundColor: theme.colors.playerTwo,
     },
-    portraitWrapper: { height: '100%' },
+    portraitWrapper: { height: '100%', position: 'relative' },
     playerPortrait: {
         maxHeight: '100%',
         aspectRatio: 1,
         objectFit: 'contain',
-        backgroundColor: theme.colors.white,
     },
     rightSide: {
         flex: 1,
@@ -87,7 +89,6 @@ const styles = StyleSheet.create({
         height: '100%',
         left: 0,
     },
-
     healthNumber: {
         color: theme.colors.white,
         fontWeight: 600,
