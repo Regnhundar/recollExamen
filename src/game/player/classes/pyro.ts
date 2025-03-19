@@ -13,7 +13,7 @@ export const fireBall: Ability = {
     name: 'Fireball',
     icon: pyroFireball,
     mana: 0,
-    cost: 3,
+    cost: 0,
     baseDamage: 10,
     description: `Shoot a fireball and deal direct damage that makes your enemy burn for ${burn.duration} turns.`,
     execute: () => {
@@ -77,6 +77,7 @@ const freeBall: Ability = {
 
 const burningHeartBuff: Buff = {
     id: 'burningHeartBuff',
+    icon: pyroBurningHeart,
     duration: 5,
     isTriggeringAbilityOnMatch: true,
     abilityToTrigger: freeBall,
@@ -87,7 +88,7 @@ const burningHeart: Ability = {
     name: 'Burning heart',
     icon: pyroBurningHeart,
     mana: 0,
-    cost: 8,
+    cost: 0,
     baseDamage: 0,
     description: `Shoot a fireball each time you match fireball cards for ${burningHeartBuff.duration} turns.`,
     execute: () => {

@@ -1,6 +1,7 @@
 import { Ability, Card, GameClass } from '@/interfaces';
 import { fisherYatesShuffle } from '@/src/utility/general';
 
+//* description: Skapar kortlek bestående av spelarens valda klass. Abilities dupliceras och sätts i en array som blandas och returneras.
 export const createCards = (array: Ability[]): Card[] => {
     const doubledCards = array.concat(array);
     const cards: Card[] = [];
@@ -19,10 +20,13 @@ export const createCards = (array: Ability[]): Card[] => {
 
     return shuffledCards;
 };
+
+//* description: Hanterar logik vid kortmatchning. Uppdaterar mana för abilities via awardMana och ifall något ska triggas vid kortmatchning görs det via triggerOnMatch.
 export const matchCards = (
     flippedCards: Card[],
     player: GameClass
 ): { success: boolean; cards: Card[]; player: GameClass } => {
+    // Då manan man får är baserad på antal kort man flippat på sin turn jämförs de två sista korten i arrayen.
     const cardOne = flippedCards[flippedCards.length - 2].name;
     const cardTwo = flippedCards[flippedCards.length - 1].name;
 
@@ -42,6 +46,7 @@ export const matchCards = (
     }
 };
 
+// *description: Hanterar mana vid kortmatchning. Ju fler kort du matchat på din turn ju mer mana får du vid en matchning.
 export const awardMana = (player: GameClass, abilityID: string, flippedCards: Card[]): [Ability, Ability, Ability] => {
     const amountToReward = flippedCards.length / 2;
     const abilities: [Ability, Ability, Ability] = [...player.abilities];
@@ -56,6 +61,7 @@ export const awardMana = (player: GameClass, abilityID: string, flippedCards: Ca
     return abilities;
 };
 
+// *description: Söker efter en buff på aktiv spelare som ska triggas av matchat kort.
 const triggerOnMatch = (matchingCard: string, player: GameClass) => {
     const triggeringBuff = player.buffs.find(
         (buff) => buff.isTriggeringAbilityOnMatch && buff.abilityToTrigger?.id === matchingCard

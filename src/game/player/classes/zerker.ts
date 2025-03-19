@@ -13,7 +13,7 @@ const wildSwing: Ability = {
     name: 'Wild swing',
     icon: zerkerMadSwing,
     mana: 0,
-    cost: 3,
+    cost: 0,
     baseDamage: 20,
     description: 'Swing wildly dealing big damage. Sometimes hitting yourself instead!',
     execute: () => {
@@ -37,23 +37,23 @@ const eatALeg: Ability = {
     icon: theLegs,
     mana: 0,
     cost: 5,
-    baseDamage: 0,
+    baseDamage: 20,
     description: 'Since no one needs both of them. Take a bite and heal back up!',
     execute: () => {
         const { player, setPlayer } = getBattleState();
         const updatedAbilityMana = updateAbilityMana(player.abilities, 'theLegs');
-        const healedSelf = manipulateHealth({ target: player, operator: '+', amount: 20 });
+        const healedSelf = manipulateHealth({ target: player, operator: '+', amount: eatALeg.baseDamage });
         setPlayer({ ...player, hp: healedSelf, abilities: updatedAbilityMana });
     },
 };
-const bloodyNineBuff: Buff = { id: 'bloodyNine', duration: 5, damageIncrease: 1 };
+const bloodyNineBuff: Buff = { id: 'bloodyNine', icon: zerkerEnrage, duration: 5, damageIncrease: 1 };
 
 const bloodyNine: Ability = {
     id: 'bloodyNine',
     name: 'Bloody nine!',
     icon: zerkerEnrage,
     mana: 0,
-    cost: 8,
+    cost: 0,
     baseDamage: 0,
     description: 'Enrage and become posessed by a nine fingered demon! Deal double damage!',
     execute: () => {

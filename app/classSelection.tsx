@@ -12,10 +12,6 @@ export default function classSelection() {
     const { setPlayerOne, setPlayerTwo, playerTurn, setPlayerTurn } = useGameStore();
     const router = useRouter();
 
-    useEffect(() => {
-        setPlayerTurn(1);
-    }, []);
-
     const handlePlayerSelect = () => {
         if (!selectedClass) {
             return console.error('No class selected!');
@@ -36,7 +32,7 @@ export default function classSelection() {
             setPlayerOne(selectedPlayerClass);
         } else {
             setPlayerTwo(selectedPlayerClass);
-            router.push('/game');
+            router.replace('/game');
         }
         setPlayerTurn((prev) => (prev === 1 ? 2 : 1));
         setSelectedClass(null);
