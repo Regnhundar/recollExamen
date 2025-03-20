@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, SafeAreaView, ScrollView } from 'react-native';
+import React, { useState } from 'react';
 import { useGameStore } from '@/src/stores';
 import { theme } from '@/src/theme';
 import { Ability, GameClass } from '@/interfaces';
 import { classes } from '@/src/game/player/classes';
 import { useRouter } from 'expo-router';
 import ClassInfo from '@/src/components/ClassInfo';
+import ClassCard from '@/src/components/ClassCard';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function classSelection() {
     const [selectedClass, setSelectedClass] = useState<GameClass | null>(null);
@@ -39,62 +41,63 @@ export default function classSelection() {
     };
 
     return (
-        <SafeAreaView style={[styles.classSelectionContainer, playerTurn === 1 ? styles.playerOne : styles.playerTwo]}>
-            {!selectedClass ? (
-                <View style={styles.classInfoWrapper}>
-                    {classes.map((classItem) => (
-                        <TouchableOpacity
-                            key={classItem.id}
-                            style={styles.classItemContainer}
-                            onPress={() => setSelectedClass(classItem)}>
-                            <Image source={classItem.portrait} style={styles.classInfoImage} />
-                            <Text style={styles.classInfoName}>{classItem.name}</Text>
-                        </TouchableOpacity>
-                    ))}
+        <LinearGradient style={styles.classSelectionPage} colors={[theme.colors.playerOne, theme.colors.playerTwo]}>
+            <SafeAreaView style={playerTurn === 1 ? styles.playerOne : styles.playerTwo}>
+                <View
+                    style={[
+                        styles.classSelectionHeader,
+                        playerTurn === 1 ? styles.headerPlayerOne : styles.headerPlayerTwo,
+                    ]}>
+                    <Text>{playerTurn === 1 ? 'Spelare 1' : 'Spelare 2'}</Text>
                 </View>
-            ) : (
-                <ClassInfo
-                    selectedClass={selectedClass}
-                    setSelectedClass={setSelectedClass}
-                    handlePlayerSelect={handlePlayerSelect}
-                />
-            )}
-        </SafeAreaView>
+                {!selectedClass ? (
+                    <ScrollView
+                        contentContainerStyle={{
+                            flexDirection: 'row',
+                            flexWrap: 'wrap',
+                            gap: theme.spacing.large,
+                            marginTop: 20,
+                        }}>
+                        {classes.map((classItem, i) => (
+                            <ClassCard
+                                key={classItem.id}
+                                classItem={classItem}
+                                setSelectedClass={setSelectedClass}
+                                index={i}
+                            />
+                        ))}
+                    </ScrollView>
+                ) : (
+                    <ClassInfo
+                        selectedClass={selectedClass}
+                        setSelectedClass={setSelectedClass}
+                        handlePlayerSelect={handlePlayerSelect}
+                    />
+                )}
+            </SafeAreaView>
+        </LinearGradient>
     );
 }
 
 const styles = StyleSheet.create({
-    classSelectionContainer: {
-        padding: theme.spacing.medium,
-
+    classSelectionPage: {
         flex: 1,
+        padding: theme.spacing.small,
     },
-    playerOne: {
-        backgroundColor: theme.colors.playerOne,
+    classSelectionHeader: {
+        minHeight: 50,
+        padding: theme.spacing.small,
+        transform: [{ perspective: 100 }, { rotateZ: '1deg' }],
+        boxShadow: theme.shadows.bulge,
+        borderWidth: 1,
     },
+    headerPlayerOne: {},
+    headerPlayerTwo: {},
+
+    playerOne: { flex: 1 },
     playerTwo: {
+        flex: 1,
         transform: [{ rotate: '180deg' }],
-        backgroundColor: theme.colors.playerTwo,
     },
-    classInfoWrapper: {
-        gap: theme.spacing.large,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    classItemContainer: {
-        borderWidth: 2,
-        padding: theme.spacing.large,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    classInfoImage: {
-        width: 250,
-        height: 250,
-        resizeMode: 'contain',
-    },
-    classInfoName: {
-        color: theme.colors.white,
-        fontSize: theme.fontSize.large,
-        textAlign: 'center',
-    },
+    classInfoWrapper: {},
 });

@@ -15,6 +15,7 @@ export interface GameClass {
     id: string;
     portrait: ImageSourcePropType;
     fullPicture: ImageSourcePropType;
+    classColor: string;
     name: string;
     maxhp: number;
     hp: number;

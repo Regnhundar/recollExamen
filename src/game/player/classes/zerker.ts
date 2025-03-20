@@ -69,6 +69,7 @@ export const zerkerClass: GameClass = {
     name: 'Zerker',
     portrait: zerkerPortrait,
     fullPicture: zerkerFull,
+    classColor: '#9E6546',
     maxhp: 120,
     hp: 120,
     buffs: [],
