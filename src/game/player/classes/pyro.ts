@@ -13,7 +13,7 @@ export const fireBall: Ability = {
     name: 'Fireball',
     icon: pyroFireball,
     mana: 0,
-    cost: 0,
+    cost: 2,
     baseDamage: 10,
     description: `Shoot a fireball and deal direct damage that makes your enemy burn for ${burn.duration} turns.`,
     execute: () => {

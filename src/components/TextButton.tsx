@@ -24,10 +24,14 @@ const styles = StyleSheet.create({
         paddingInline: theme.spacing.medium,
         paddingBlock: theme.spacing.small,
         alignSelf: 'flex-start',
+        boxShadow: theme.shadows.buttonShadow,
+        filter: [{ dropShadow: theme.shadows.dropShadow }],
+        borderRadius: 4,
+        borderWidth: 1,
     },
     textButtonText: { fontWeight: 600, fontSize: theme.fontSize.medium },
-    proceed: { backgroundColor: 'green' },
+    proceed: { backgroundColor: '#017A36' },
     cancel: {
-        backgroundColor: 'red',
+        backgroundColor: '#CF231F',
     },
 });

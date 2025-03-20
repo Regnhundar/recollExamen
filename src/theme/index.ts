@@ -32,12 +32,7 @@ export const theme = {
         large: 24,
     },
     shadows: {
-        bigButton: {
-            shadowColor: 'black',
-            shadowOffset: { width: -3, height: -3 },
-            shadowOpacity: 1,
-            shadowRadius: 1, // "blur"
-            elevation: 15, // för android
-        },
+        buttonShadow: 'inset 2 2 1 0 rgba(255, 255, 255, .15), 3 3 1 0 rgba(0, 0, 0, .1)',
+        dropShadow: '2 2 0 rgba(0, 0, 0, 0.5)',
     },
 };
