@@ -1,10 +1,12 @@
 import { ImageSourcePropType } from 'react-native';
+import { Buff, Debuff } from './interfaceStatusEffects';
 export interface Ability {
     id: string;
-    icon: string;
+    icon: ImageSourcePropType;
     name: string;
     mana: number;
     cost: number;
+    baseDamage: number;
     description: string;
     execute: () => void;
 }
@@ -12,9 +14,12 @@ export interface Ability {
 export interface GameClass {
     id: string;
     portrait: ImageSourcePropType;
+    fullPicture: ImageSourcePropType;
     name: string;
     maxhp: number;
     hp: number;
+    buffs: Buff[];
+    debuffs: Debuff[];
     description: string;
     abilities: [Ability, Ability, Ability];
 }

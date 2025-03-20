@@ -1,6 +1,7 @@
+import { ImageSourcePropType } from 'react-native';
 export interface Card {
     id: number;
     name: string;
-    icon: string;
+    icon: ImageSourcePropType;
     isFlipped: boolean;
 }

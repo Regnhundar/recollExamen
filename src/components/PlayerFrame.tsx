@@ -1,40 +1,41 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import React from 'react';
 import { theme } from '../theme';
+import { GameClass } from '@/interfaces';
+import { useGameStore } from '../stores';
+import StatusTracker from './StatusTracker';
 
 interface Props {
     player: number;
+    classData: GameClass;
 }
-export default function PlayerFrame({ player }: Props) {
+export default function PlayerFrame({ player, classData }: Props) {
+    const { playerTurn } = useGameStore();
     return (
         <View style={[styles.playerFrame, player === 1 ? styles.playerOne : styles.playerTwo]}>
             <View style={styles.portraitWrapper}>
-                <Image style={styles.playerPortrait} source={require('../../assets/images/zerker.png')} />
+                <StatusTracker type={'buff'} statusArray={classData.buffs} />
+                <Image style={styles.playerPortrait} source={classData.portrait} />
+                <StatusTracker type={'debuff'} statusArray={classData.debuffs} />
             </View>
 
             <View style={styles.rightSide}>
-                <View style={styles.healthbar}>
-                    <Text style={styles.healthNumber}>100</Text>
+                <View style={styles.healthbarWrapper}>
+                    <Text style={styles.healthNumber}>{classData.hp}</Text>
+                    <View style={[styles.healthBar, { width: `${(classData.hp / classData.maxhp) * 100}%` }]}></View>
                 </View>
-                <View style={styles.buttonContainer}>
-                    <Pressable style={styles.button} onPress={() => console.log('MAD SWING!')}>
-                        <Image
-                            source={require('../../assets/images/abilities/zerker/mad-swing.png')}
-                            style={styles.icon}
-                        />
-                    </Pressable>
-                    <Pressable style={styles.button} onPress={() => console.log('IGNORE PAIN')}>
-                        <Image
-                            source={require('../../assets/images/abilities/zerker/ignore-pain.png')}
-                            style={styles.icon}
-                        />
-                    </Pressable>
-                    <Pressable style={styles.button} onPress={() => console.log('ENRAGE')}>
-                        <Image
-                            source={require('../../assets/images/abilities/zerker/enrage.png')}
-                            style={styles.icon}
-                        />
-                    </Pressable>
+                <View style={styles.abilityButtonContainer}>
+                    {classData.abilities.map((ability) => (
+                        <Pressable
+                            key={`${ability.id}-${player}`}
+                            style={styles.abilityButton}
+                            onPress={
+                                playerTurn === player && ability.mana === ability.cost ? ability.execute : undefined
+                            }>
+                            <Image source={ability.icon} style={styles.abilityIcon} />
+                            <Text style={styles.abilityMana}>{`${ability.mana}/${ability.cost}`}</Text>
+                        </Pressable>
+                    ))}
                 </View>
             </View>
         </View>
@@ -44,56 +45,77 @@ export default function PlayerFrame({ player }: Props) {
 const styles = StyleSheet.create({
     playerFrame: {
         width: '100%',
-        height: '20%',
+        height: '18%',
         flexDirection: 'row',
         alignItems: 'center',
         flexWrap: 'nowrap',
         paddingInline: theme.spacing.small,
-        paddingBlock: theme.spacing.large,
+        paddingBlock: theme.spacing.medium,
         gap: theme.spacing.small,
         backgroundColor: theme.colors.primary,
     },
     playerOne: {
         marginTop: 'auto',
+        backgroundColor: theme.colors.playerOne,
     },
     playerTwo: {
         marginBottom: 'auto',
         transform: [{ rotate: '180deg' }],
+        backgroundColor: theme.colors.playerTwo,
     },
-    portraitWrapper: { height: '100%' },
+    portraitWrapper: { height: '100%', position: 'relative' },
     playerPortrait: {
         maxHeight: '100%',
         aspectRatio: 1,
         objectFit: 'contain',
-        backgroundColor: 'white',
     },
     rightSide: {
         flex: 1,
         gap: theme.spacing.xxsmall,
     },
-    healthbar: {
+    healthbarWrapper: {
+        position: 'relative',
         flex: 1,
-        height: '50%',
-        backgroundColor: 'green',
+        height: '40%',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: theme.borderWidth.medium,
+        backgroundColor: 'red',
+    },
+    healthBar: {
+        position: 'absolute',
+        backgroundColor: 'green',
+        zIndex: 9,
+        height: '100%',
+        left: 0,
     },
     healthNumber: {
         color: theme.colors.white,
         fontWeight: 600,
+        zIndex: 999,
     },
-    buttonContainer: {
-        height: '50%',
+    abilityButtonContainer: {
+        height: '60%',
         flexDirection: 'row',
         columnGap: theme.spacing.xxsmall,
     },
-    button: {
+    abilityButton: {
+        position: 'relative',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: theme.spacing.xxsmall,
         backgroundColor: 'beige',
+        gap: 2,
     },
-    icon: { objectFit: 'contain' },
+    abilityMana: {
+        position: 'absolute',
+        bottom: '-15%',
+        left: '50%',
+        transform: [{ translateX: '-50%' }, { translateY: '15%' }],
+        backgroundColor: theme.colors.black,
+        fontWeight: 600,
+        color: theme.colors.white,
+    },
+    abilityIcon: { resizeMode: 'contain', height: '80%', width: '80%' },
 });

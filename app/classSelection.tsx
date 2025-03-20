@@ -1,59 +1,88 @@
-import { StyleSheet, Text, View, Image, SafeAreaView } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { useGameStore } from '@/src/stores';
 import { theme } from '@/src/theme';
-import { GameClass } from '@/interfaces';
+import { Ability, GameClass } from '@/interfaces';
 import { classes } from '@/src/game/player/classes';
+import { useRouter } from 'expo-router';
+import ClassInfo from '@/src/components/ClassInfo';
 
 export default function classSelection() {
     const [selectedClass, setSelectedClass] = useState<GameClass | null>(null);
-    const { setPlayerOne, setPlayerTwo, playerOne, playerTwo, playerTurn, setPlayerTurn } = useGameStore();
+    const { setPlayerOne, setPlayerTwo, playerTurn, setPlayerTurn } = useGameStore();
+    const router = useRouter();
 
     const handlePlayerSelect = () => {
         if (!selectedClass) {
             return console.error('No class selected!');
         }
-        const selectedPlayer = {
+        const resetAbilities = selectedClass.abilities.map((ability) => ({ ...ability, mana: 0 })) as [
+            Ability,
+            Ability,
+            Ability
+        ];
+        const selectedPlayerClass = {
             ...selectedClass,
             hp: selectedClass.maxhp,
+            abilities: resetAbilities,
+            buffs: [],
+            debuffs: [],
         };
         if (playerTurn === 1) {
-            setPlayerOne(selectedPlayer);
+            setPlayerOne(selectedPlayerClass);
         } else {
-            setPlayerTwo(selectedPlayer);
+            setPlayerTwo(selectedPlayerClass);
+            router.replace('/game');
         }
         setPlayerTurn((prev) => (prev === 1 ? 2 : 1));
         setSelectedClass(null);
     };
 
     return (
-        <SafeAreaView style={styles.classSelectionContainer}>
-            <View style={styles.classInfoWrapper}>
-                {classes.map((classItem) => (
-                    <View key={classItem.id} style={styles.classItemContainer}>
-                        <Image source={classItem.portrait} style={styles.classInfoImage} />
-                        <Text style={styles.classInfoName}>{classItem.name}</Text>
-                    </View>
-                ))}
-            </View>
+        <SafeAreaView style={[styles.classSelectionContainer, playerTurn === 1 ? styles.playerOne : styles.playerTwo]}>
+            {!selectedClass ? (
+                <View style={styles.classInfoWrapper}>
+                    {classes.map((classItem) => (
+                        <TouchableOpacity
+                            key={classItem.id}
+                            style={styles.classItemContainer}
+                            onPress={() => setSelectedClass(classItem)}>
+                            <Image source={classItem.portrait} style={styles.classInfoImage} />
+                            <Text style={styles.classInfoName}>{classItem.name}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            ) : (
+                <ClassInfo
+                    selectedClass={selectedClass}
+                    setSelectedClass={setSelectedClass}
+                    handlePlayerSelect={handlePlayerSelect}
+                />
+            )}
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     classSelectionContainer: {
-        backgroundColor: theme.colors.primary,
+        padding: theme.spacing.medium,
+
         flex: 1,
+    },
+    playerOne: {
+        backgroundColor: theme.colors.playerOne,
+    },
+    playerTwo: {
+        transform: [{ rotate: '180deg' }],
+        backgroundColor: theme.colors.playerTwo,
     },
     classInfoWrapper: {
         gap: theme.spacing.large,
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
     classItemContainer: {
         borderWidth: 2,
-
         padding: theme.spacing.large,
         alignItems: 'center',
         justifyContent: 'center',

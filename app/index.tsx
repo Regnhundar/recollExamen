@@ -1,14 +1,15 @@
-import { Link } from 'expo-router';
-import { View, Image, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
+import { View, Image, StyleSheet, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function Index() {
     const insets = useSafeAreaInsets();
+    const router = useRouter();
     return (
         <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
-            <Link style={styles.button} href={'/classSelection'}>
-                <Image source={require('./../assets/images/wizard.png')} />
-            </Link>
+            <Pressable style={styles.button} onPress={() => router.replace('/classSelection')}>
+                <Image style={styles.image} source={require('./../assets/images/wizard.png')} />
+            </Pressable>
         </View>
     );
 }
@@ -31,5 +32,11 @@ const styles = StyleSheet.create({
         borderRadius: 150,
         padding: 20,
         backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    image: {
+        resizeMode: 'contain',
+        maxWidth: '100%',
     },
 });

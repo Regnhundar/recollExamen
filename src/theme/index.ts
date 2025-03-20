@@ -6,6 +6,8 @@ export const theme = {
         black: '#333',
         danger: '#e74c3c',
         background: '#f5f5f5',
+        playerOne: '#3498db',
+        playerTwo: '#27840F',
     },
     spacing: {
         xxsmall: 2,
@@ -28,5 +30,9 @@ export const theme = {
         small: 12,
         medium: 16,
         large: 24,
+    },
+    shadows: {
+        buttonShadow: 'inset 2 2 1 0 rgba(255, 255, 255, .15), 3 3 1 0 rgba(0, 0, 0, .1)',
+        dropShadow: '2 2 0 rgba(0, 0, 0, 0.5)',
     },
 };
