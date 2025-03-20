@@ -3,11 +3,14 @@ export const theme = {
         primary: '#3498db',
         secondary: '#2ecc71',
         white: '#fff',
+        offwhite: 'rgb(255, 255, 240)',
         black: '#333',
-        danger: '#e74c3c',
+        cancel: '#e74c3c',
+        proceed: '#017A36',
+        info: '#FFDE16',
         background: '#f5f5f5',
-        playerOne: '#3498db',
-        playerTwo: '#27840F',
+        playerOne: '#4381D5',
+        playerTwo: '#70EDF9',
     },
     spacing: {
         xxsmall: 2,
@@ -32,7 +35,8 @@ export const theme = {
         large: 24,
     },
     shadows: {
-        buttonShadow: 'inset 2 2 1 0 rgba(255, 255, 255, .15), 3 3 1 0 rgba(0, 0, 0, .1)',
-        dropShadow: '2 2 0 rgba(0, 0, 0, 0.5)',
+        bulge: 'inset 3 3 1 0 rgba(255, 255, 255, .15), inset -3 -3 1 0 rgba(0, 0, 0, .2), 2 2 1 0 rgba(0, 0, 0, .2)',
+        dent: 'inset -3 -3 1 0 rgba(255, 255, 255, .15), inset 2 2 1 0 rgba(0, 0, 0, .2)',
+        dropShadow: '14 14 0 rgba(0, 0, 0, 0.5)',
     },
 };
