@@ -3,6 +3,7 @@ import React from 'react';
 import { theme } from '../theme';
 import TextButton from './TextButton';
 import { GameClass } from '@/interfaces';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface Props {
     selectedClass: GameClass;
@@ -12,13 +13,15 @@ interface Props {
 const ClassInfo: React.FC<Props> = ({ selectedClass, setSelectedClass, handlePlayerSelect }) => {
     return (
         <View style={styles.selectedClassWrapper}>
-            <Text style={styles.selectedClassName}>{selectedClass.name.toUpperCase()}</Text>
-            <View style={styles.selectedClassImageWrapper}>
+            <LinearGradient
+                colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.5)']}
+                style={[styles.selectedClassImageWrapper, { backgroundColor: selectedClass.classColor }]}>
+                <Text style={styles.selectedClassName}>{selectedClass.name.toUpperCase()}</Text>
                 <Image source={selectedClass.fullPicture} style={styles.selectedClassPicture} />
-            </View>
+            </LinearGradient>
             <FlatList
                 style={styles.selectedAbilityList}
-                contentContainerStyle={{ paddingBottom: theme.spacing.large }}
+                contentContainerStyle={{ paddingBottom: theme.spacing.large, paddingTop: theme.spacing.small, gap: 5 }}
                 data={selectedClass.abilities}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
@@ -33,8 +36,8 @@ const ClassInfo: React.FC<Props> = ({ selectedClass, setSelectedClass, handlePla
                 )}
             />
             <View style={styles.selectedClassButtonWrapper}>
-                <TextButton text='Tillbaka' type='cancel' onPress={() => setSelectedClass(null)} />
-                <TextButton text={`Välj ${selectedClass.name}`} onPress={handlePlayerSelect} />
+                <TextButton text='Back' type='cancel' onPress={() => setSelectedClass(null)} />
+                <TextButton text={`PICK ${selectedClass.name}`} onPress={handlePlayerSelect} />
             </View>
         </View>
     );
@@ -49,20 +52,24 @@ const styles = StyleSheet.create({
     selectedClassName: {
         fontWeight: 600,
         fontSize: theme.fontSize.large,
+        color: theme.colors.white,
     },
     selectedAbilityList: {
-        flex: 1,
+        flex: 3,
+        flexShrink: 1,
     },
     selectedAbilityListItem: {
-        flexDirection: 'row',
-        flex: 1,
-        alignItems: 'center',
-    },
-    selectedAbilityIcon: {
-        backgroundColor: 'red',
-    },
-    selectedAbilityListTextWrapper: {
+        gap: theme.spacing.medium,
         padding: theme.spacing.small,
+        flexDirection: 'row',
+        alignItems: 'center',
+        boxShadow: theme.shadows.bulge,
+        backgroundColor: theme.colors.offwhite,
+        borderRadius: 4,
+        borderWidth: 2,
+    },
+    selectedAbilityIcon: {},
+    selectedAbilityListTextWrapper: {
         flex: 1,
     },
     selectedAbilityName: {
@@ -79,11 +86,21 @@ const styles = StyleSheet.create({
     },
     selectedClassImageWrapper: {
         padding: theme.spacing.large,
-        flex: 1,
+        flex: 2,
+        maxHeight: '45%',
+        marginBottom: 10,
+        boxShadow: theme.shadows.pictureFrame,
+        marginInline: theme.spacing.small,
+        borderRadius: 1,
+        borderWidth: 2,
     },
 
     selectedClassPicture: {
+        alignSelf: 'center',
+        filter: [{ dropShadow: theme.shadows.dropShadow }],
         resizeMode: 'contain',
+        flex: 1,
+        aspectRatio: 1,
         width: '100%',
         height: '100%',
     },

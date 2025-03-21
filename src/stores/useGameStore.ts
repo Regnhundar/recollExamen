@@ -19,9 +19,9 @@ export const useGameStore = create<GameStore>((set) => ({
         set((state) => ({
             playerTurn: typeof value === 'function' ? value(state.playerTurn) : value,
         })),
-    playerOne: defaultClass,
+    playerOne: { ...defaultClass },
     setPlayerOne: (playerOne) => set({ playerOne: playerOne }),
-    playerTwo: defaultClass,
+    playerTwo: { ...defaultClass },
     setPlayerTwo: (playerTwo) => set({ playerTwo: playerTwo }),
     isGameOver: false,
     setIsGameOver: (boolean) => set({ isGameOver: boolean }),
