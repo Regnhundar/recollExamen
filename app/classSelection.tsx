@@ -21,7 +21,7 @@ export default function classSelection() {
         const resetAbilities = selectedClass.abilities.map((ability) => ({ ...ability, mana: 0 })) as [
             Ability,
             Ability,
-            Ability
+            Ability,
         ];
         const selectedPlayerClass = {
             ...selectedClass,
@@ -42,7 +42,7 @@ export default function classSelection() {
 
     return (
         <LinearGradient style={styles.classSelectionPage} colors={[theme.colors.playerOne, theme.colors.playerTwo]}>
-            <SafeAreaView style={playerTurn === 1 ? styles.playerOne : styles.playerTwo}>
+            <SafeAreaView style={[styles.classSelectionPlayer, playerTurn === 1 ? styles.playerOne : styles.playerTwo]}>
                 <View
                     style={[
                         styles.classSelectionHeader,
@@ -83,17 +83,20 @@ const styles = StyleSheet.create({
     classSelectionPage: {
         flex: 1,
         padding: theme.spacing.small,
+        borderWidth: 2,
     },
     classSelectionHeader: {
         minHeight: 50,
         padding: theme.spacing.small,
-        transform: [{ perspective: 100 }, { rotateZ: '1deg' }],
+
         boxShadow: theme.shadows.bulge,
         borderWidth: 1,
     },
     headerPlayerOne: {},
     headerPlayerTwo: {},
-
+    classSelectionPlayer: {
+        gap: theme.spacing.medium,
+    },
     playerOne: { flex: 1 },
     playerTwo: {
         flex: 1,

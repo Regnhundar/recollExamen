@@ -36,7 +36,7 @@ const burninate: Ability = {
     mana: 0,
     cost: 5,
     baseDamage: 5,
-    description: 'Enemy burning? Consume burn to deal BIG DAMAGE! Not burning? Meh. Small damage.',
+    description: 'Consume burn to deal BIG DAMAGE! Not burning? Meh. Small damage.',
     execute: () => {
         const { opponent, setOpponent, player, setPlayer } = getBattleState();
 
