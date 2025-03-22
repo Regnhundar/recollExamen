@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { theme } from '../theme';
 import { GameClass } from '@/interfaces';
@@ -11,8 +12,17 @@ interface Props {
 }
 export default function PlayerFrame({ player, classData }: Props) {
     const { playerTurn } = useGameStore();
+    const percentOfHitPoints = (classData.hp / classData.maxhp) * 100;
+    const playerBasedShadow =
+        player === 1 ? { boxShadow: theme.shadows.bulge } : { boxShadow: theme.shadows.bulgeReverse };
     return (
-        <View style={[styles.playerFrame, player === 1 ? styles.playerOne : styles.playerTwo]}>
+        <LinearGradient
+            colors={
+                player === 1
+                    ? ['rgba(255, 255, 255, .1)', 'rgba(0, 0, 0, .2)']
+                    : ['rgba(0, 0, 0, .2)', 'rgba(255, 255, 255, .1)']
+            }
+            style={[styles.playerFrame, player === 1 ? styles.playerOne : styles.playerTwo]}>
             <View style={styles.portraitWrapper}>
                 <StatusTracker type={'buff'} statusArray={classData.buffs} />
                 <Image style={styles.playerPortrait} source={classData.portrait} />
@@ -22,23 +32,36 @@ export default function PlayerFrame({ player, classData }: Props) {
             <View style={styles.rightSide}>
                 <View style={styles.healthbarWrapper}>
                     <Text style={styles.healthNumber}>{classData.hp}</Text>
-                    <View style={[styles.healthBar, { width: `${(classData.hp / classData.maxhp) * 100}%` }]}></View>
+                    <View
+                        style={[
+                            styles.healthBar,
+                            { width: `${percentOfHitPoints}%` },
+                            percentOfHitPoints !== 100 && { borderRightColor: '#bd0000', borderRightWidth: 2 },
+                            playerBasedShadow,
+                        ]}></View>
                 </View>
                 <View style={styles.abilityButtonContainer}>
                     {classData.abilities.map((ability) => (
                         <Pressable
                             key={`${ability.id}-${player}`}
-                            style={styles.abilityButton}
+                            style={[styles.abilityButton, playerBasedShadow]}
                             onPress={
                                 playerTurn === player && ability.mana === ability.cost ? ability.execute : undefined
                             }>
                             <Image source={ability.icon} style={styles.abilityIcon} />
-                            <Text style={styles.abilityMana}>{`${ability.mana}/${ability.cost}`}</Text>
+                            <Text
+                                style={[
+                                    styles.abilityMana,
+                                    ability.mana === ability.cost
+                                        ? styles.abilityEnoughMana
+                                        : styles.abilityNotEnoughMana,
+                                    playerBasedShadow,
+                                ]}>{`${ability.mana}/${ability.cost}`}</Text>
                         </Pressable>
                     ))}
                 </View>
             </View>
-        </View>
+        </LinearGradient>
     );
 }
 
@@ -57,11 +80,13 @@ const styles = StyleSheet.create({
     playerOne: {
         marginTop: 'auto',
         backgroundColor: theme.colors.playerOne,
+        boxShadow: 'inset 0 4 1 0 #29d886, inset 0 5 1 0 rgba(0,0,0,.1),',
     },
     playerTwo: {
         marginBottom: 'auto',
         transform: [{ rotate: '180deg' }],
         backgroundColor: theme.colors.playerTwo,
+        boxShadow: 'inset 0 4 1 0 #bd910f, inset 0 5 1 0 rgba(0,0,0,.1),',
     },
     portraitWrapper: { height: '100%', position: 'relative' },
     playerPortrait: {
@@ -81,6 +106,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: theme.borderWidth.medium,
         backgroundColor: 'red',
+        boxShadow: 'rgba(50, 50, 93, 0.4) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.4) 0px 18px 36px -18px inset',
+        borderRadius: 4,
     },
     healthBar: {
         position: 'absolute',
@@ -107,15 +134,26 @@ const styles = StyleSheet.create({
         borderWidth: theme.spacing.xxsmall,
         backgroundColor: 'beige',
         gap: 2,
+        boxShadow: theme.shadows.bulge,
+        borderRadius: 4,
     },
     abilityMana: {
         position: 'absolute',
-        bottom: '-15%',
+        bottom: -25,
         left: '50%',
-        transform: [{ translateX: '-50%' }, { translateY: '15%' }],
-        backgroundColor: theme.colors.black,
+        transform: [{ translateX: '-50%' }, { translateY: '-50%' }],
+        width: '60%',
+        textAlign: 'center',
+        borderRadius: 4,
         fontWeight: 600,
         color: theme.colors.white,
+        borderWidth: 1,
+    },
+    abilityEnoughMana: {
+        backgroundColor: 'green',
+    },
+    abilityNotEnoughMana: {
+        backgroundColor: 'gray',
     },
     abilityIcon: { resizeMode: 'contain', height: '80%', width: '80%' },
 });

@@ -37,7 +37,7 @@ export default function GameSquare({ card, onPress }: Props) {
 }
 
 const styles = StyleSheet.create({
-    gameSquareWrapper: { width: '45%', aspectRatio: 1, borderRadius: 4, padding: theme.spacing.large },
+    gameSquareWrapper: { width: '45%', aspectRatio: 1, borderRadius: 4, padding: theme.spacing.large, borderWidth: 2 },
     gameSquare: {
         aspectRatio: 1,
         width: '100%',

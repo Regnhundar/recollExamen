@@ -15,7 +15,7 @@ const ClassCard: React.FC<Props> = ({ classItem, setSelectedClass, index }) => {
             key={classItem.id}
             style={[
                 styles.classItemContainer,
-                (index + 1) % 2 === 0 ? styles.classItemContainerEven : styles.classItemContainerUneven,
+                index % 2 === 0 ? styles.classItemContainerUneven : styles.classItemContainerEven,
             ]}
             onPress={() => setSelectedClass(classItem)}>
             <LinearGradient
@@ -23,21 +23,18 @@ const ClassCard: React.FC<Props> = ({ classItem, setSelectedClass, index }) => {
                 style={[
                     { backgroundColor: classItem.classColor },
                     styles.classInfoImageWrapper,
-                    (index + 1) % 2 === 0 ? styles.classItemEven : styles.classItemUneven,
+                    index % 2 === 0 ? styles.classItemUneven : styles.classItemEven,
                 ]}>
                 <Image
                     source={classItem.portrait}
-                    style={[
-                        styles.classInfoImage,
-                        (index + 1) % 2 === 0 ? styles.classItemEven : styles.classItemUneven,
-                    ]}
+                    style={[styles.classInfoImage, index % 2 === 0 ? styles.classItemUneven : styles.classItemEven]}
                 />
             </LinearGradient>
             <LinearGradient
                 style={[
                     styles.classInfoNameWrapper,
                     { backgroundColor: classItem.classColor },
-                    (index + 1) % 2 === 0 ? styles.classItemEven : styles.classItemUneven,
+                    index % 2 === 0 ? styles.classItemUneven : styles.classItemEven,
                 ]}
                 colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.5)']}>
                 <Text style={styles.classInfoName}>{classItem.name}</Text>
@@ -45,8 +42,7 @@ const ClassCard: React.FC<Props> = ({ classItem, setSelectedClass, index }) => {
             <View
                 style={[
                     styles.classInfoDescriptionWrapper,
-
-                    (index + 1) % 2 === 0 ? styles.classItemEven : styles.classItemUneven,
+                    index % 2 === 0 ? styles.classItemUneven : styles.classItemEven,
                 ]}>
                 <Text style={styles.classInfoDescription}>{classItem.description}</Text>
             </View>
