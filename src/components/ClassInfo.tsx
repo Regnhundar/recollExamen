@@ -21,7 +21,12 @@ const ClassInfo: React.FC<Props> = ({ selectedClass, setSelectedClass, handlePla
             </LinearGradient>
             <FlatList
                 style={styles.selectedAbilityList}
-                contentContainerStyle={{ paddingBottom: theme.spacing.large, paddingTop: theme.spacing.small, gap: 5 }}
+                contentContainerStyle={{
+                    paddingBottom: theme.spacing.large,
+                    paddingTop: theme.spacing.small,
+                    gap: theme.spacing.small,
+                    marginBlock: 'auto',
+                }}
                 data={selectedClass.abilities}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
@@ -87,11 +92,14 @@ const styles = StyleSheet.create({
     selectedClassImageWrapper: {
         padding: theme.spacing.large,
         flex: 2,
-        maxHeight: '45%',
-        marginBottom: 10,
+        alignSelf: 'center',
+        maxHeight: '40%',
+        maxWidth: '70%',
         boxShadow: theme.shadows.pictureFrame,
+        marginTop: theme.spacing.medium,
         marginInline: theme.spacing.small,
-        borderRadius: 1,
+        borderTopStartRadius: 50,
+        borderTopEndRadius: 50,
         borderWidth: 2,
     },
 
@@ -99,9 +107,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         filter: [{ dropShadow: theme.shadows.dropShadow }],
         resizeMode: 'contain',
-        flex: 1,
-        aspectRatio: 1,
-        width: '100%',
         height: '100%',
     },
 });

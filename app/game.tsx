@@ -143,15 +143,12 @@ export default function Game() {
 const styles = StyleSheet.create({
     gameWrapper: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: theme.colors.black,
     },
     toClassSelect: {
         width: '100%',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: theme.colors.danger,
+        backgroundColor: theme.colors.cancel,
     },
 });
