@@ -19,6 +19,7 @@ export default function RootLayout() {
                     statusBarHidden: true,
                 }}
             />
+
             <Stack.Screen
                 name='game'
                 options={{

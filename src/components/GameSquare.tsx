@@ -3,6 +3,7 @@ import React from 'react';
 import { Card } from '@/interfaces';
 import { theme } from '../theme';
 import { useGameStore } from '../stores';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface Props {
     card: Card;
@@ -12,40 +13,54 @@ export default function GameSquare({ card, onPress }: Props) {
     const { playerTurn } = useGameStore();
 
     return (
-        <Pressable
+        <LinearGradient
+            colors={
+                playerTurn === 1
+                    ? ['rgba(255, 255, 255, .1)', 'rgba(0, 0, 0, .2)']
+                    : ['rgba(0, 0, 0, .2)', 'rgba(255, 255, 255, .1)']
+            }
             style={[
-                styles.gameSquare,
-                card.isFlipped
-                    ? styles.gameSquareFlipped
-                    : playerTurn === 1
-                    ? styles.gameSquarePlayerOne
-                    : styles.gameSquarePlayerTwo,
-            ]}
-            onPress={onPress}>
-            {card.isFlipped ? <Image style={styles.gameSquareAbilityImage} source={card.icon} /> : null}
-        </Pressable>
+                styles.gameSquareWrapper,
+                card.isFlipped && playerTurn === 1
+                    ? styles.gameSquareFlippedPlayerOne
+                    : card.isFlipped && playerTurn === 2
+                      ? styles.gameSquareFlippedPlayerTwo
+                      : playerTurn === 1
+                        ? styles.gameSquarePlayerOne
+                        : styles.gameSquarePlayerTwo,
+            ]}>
+            <Pressable style={[styles.gameSquare]} onPress={onPress}>
+                {card.isFlipped ? <Image style={styles.gameSquareAbilityImage} source={card.icon} /> : null}
+            </Pressable>
+        </LinearGradient>
     );
 }
 
 const styles = StyleSheet.create({
+    gameSquareWrapper: { width: '45%', aspectRatio: 1, borderRadius: 4, padding: theme.spacing.large },
     gameSquare: {
-        backgroundColor: theme.colors.secondary,
         aspectRatio: 1,
-        width: '40%',
-        padding: theme.spacing.large,
+        width: '100%',
     },
 
     gameSquarePlayerOne: {
         backgroundColor: theme.colors.playerOne,
+        boxShadow: theme.shadows.bigBulge,
     },
     gameSquarePlayerTwo: {
         backgroundColor: theme.colors.playerTwo,
+        boxShadow: theme.shadows.bigBulgeReverse,
     },
-    gameSquareFlipped: {
-        backgroundColor: 'beige',
+    gameSquareFlippedPlayerOne: {
+        backgroundColor: theme.colors.offwhite,
+        boxShadow: theme.shadows.bigBulge,
+    },
+    gameSquareFlippedPlayerTwo: {
+        boxShadow: theme.shadows.bigBulgeReverse,
+        backgroundColor: theme.colors.offwhite,
     },
     gameSquareAbilityImage: {
-        width: '100%',
+        aspectRatio: 1,
         flex: 1,
         justifyContent: 'center',
         alignContent: 'center',
