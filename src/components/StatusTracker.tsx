@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
-import { Buff, Debuff } from '@/interfaces/interfaceStatusEffects';
+import { Buff, Debuff } from '@/src/interfaces/interfaceStatusEffects';
 import { theme } from '../theme';
 
 interface Props {

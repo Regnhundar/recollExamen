@@ -4,6 +4,7 @@ import { useGameStore } from '../stores';
 import { useRouter } from 'expo-router';
 import TextButton from './TextButton';
 import { defaultClass } from '../game/player/classes/default';
+import { theme } from '../theme';
 
 interface Props {}
 const GameOver: React.FC<Props> = () => {
@@ -22,11 +23,9 @@ const GameOver: React.FC<Props> = () => {
 
     return (
         <View style={styles.gameOver}>
-            <Text>{winner}</Text>
-
-            <View style={styles.gameOverButtonWrapper}>
-                <TextButton text={'spela igen'} onPress={handleRematch} />
-            </View>
+            <Text style={styles.gameOverMessage}>{winner}</Text>
+            <TextButton text={'spela igen'} onPress={handleRematch} />
+            <Text style={styles.gameOverMessage}>{winner}</Text>
         </View>
     );
 };
@@ -40,6 +39,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    gameOverMessage: {
+        fontSize: theme.fontSize.large,
     },
     gameOverButtonWrapper: {},
 });

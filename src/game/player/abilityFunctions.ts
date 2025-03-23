@@ -1,5 +1,5 @@
-import { Buff, Debuff } from '@/interfaces/interfaceStatusEffects';
-import { Ability, GameClass } from '../../../interfaces';
+import { Buff, Debuff } from '@/src/interfaces/interfaceStatusEffects';
+import { Ability, GameClass } from '../../interfaces';
 import { getBattleState, useGameStore } from '../../stores';
 
 const { setIsGameOver } = useGameStore.getState();

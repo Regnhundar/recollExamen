@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, Platform } from 'react-native';
 import React from 'react';
 import { theme } from '../theme';
 import TextButton from './TextButton';
-import { GameClass } from '@/interfaces';
+import { GameClass } from '@/src/interfaces';
 import { LinearGradient } from 'expo-linear-gradient';
 
 interface Props {
@@ -31,7 +31,13 @@ const ClassInfo: React.FC<Props> = ({ selectedClass, setSelectedClass, handlePla
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <View style={styles.selectedAbilityListItem}>
-                        <Image source={item.icon} style={styles.selectedAbilityIcon} />
+                        <Image
+                            source={item.icon}
+                            style={
+                                Platform.OS === 'android' &&
+                                ({ filter: [{ dropShadow: theme.shadows.dropShadow }] } as any)
+                            }
+                        />
                         <View style={styles.selectedAbilityListTextWrapper}>
                             <Text style={styles.selectedAbilityName}>{item.name.toUpperCase()}</Text>
                             <Text style={styles.selectedAbilityDescription}>{item.description}</Text>
@@ -73,7 +79,9 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 2,
     },
-    selectedAbilityIcon: {},
+    selectedAbilityIcon: {
+        filter: [{ dropShadow: theme.shadows.dropShadow }],
+    },
     selectedAbilityListTextWrapper: {
         flex: 1,
     },

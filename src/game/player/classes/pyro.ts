@@ -1,4 +1,4 @@
-import { GameClass, Ability } from '../../../../interfaces';
+import { GameClass, Ability } from '../../../interfaces';
 import { applyStatusEffect, manipulateHealth, updateAbilityMana } from '../abilityFunctions';
 import { getBattleState } from '@/src/stores/battleState';
 import pyroPortrait from '../../../../assets/images/characters/pyro/pyro.png';
@@ -7,7 +7,7 @@ import pyroFireball from '../../../../assets/images/abilities/pyro/fire-ball.png
 import pyroFlameShield from '../../../../assets/images/abilities/pyro/flame-shield.png';
 import pyroBurningHeart from '../../../../assets/images/abilities/pyro/burning-heart.png';
 import { burn } from '../statusEffects';
-import { Buff } from '@/interfaces/interfaceStatusEffects';
+import { Buff } from '@/src/interfaces/interfaceStatusEffects';
 
 export const fireBall: Ability = {
     id: 'fireBall',
