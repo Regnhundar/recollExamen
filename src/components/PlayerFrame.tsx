@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { theme } from '../theme';
-import { GameClass } from '@/interfaces';
+import { GameClass } from '@/src/interfaces';
 import { useGameStore } from '../stores';
 import StatusTracker from './StatusTracker';
 
@@ -13,8 +13,10 @@ interface Props {
 export default function PlayerFrame({ player, classData }: Props) {
     const { playerTurn } = useGameStore();
     const percentOfHitPoints = (classData.hp / classData.maxhp) * 100;
+
     const playerBasedShadow =
         player === 1 ? { boxShadow: theme.shadows.bulge } : { boxShadow: theme.shadows.bulgeReverse };
+
     return (
         <LinearGradient
             colors={
@@ -23,11 +25,17 @@ export default function PlayerFrame({ player, classData }: Props) {
                     : ['rgba(0, 0, 0, .2)', 'rgba(255, 255, 255, .1)']
             }
             style={[styles.playerFrame, player === 1 ? styles.playerOne : styles.playerTwo]}>
-            <View style={styles.portraitWrapper}>
+            <LinearGradient
+                colors={
+                    player === 1
+                        ? ['rgba(255, 255, 255, .1)', 'rgba(0, 0, 0, .2)']
+                        : ['rgba(0, 0, 0, .2)', 'rgba(255, 255, 255, .1)']
+                }
+                style={[styles.portraitWrapper, { backgroundColor: `${classData.classColor}` }]}>
                 <StatusTracker type={'buff'} statusArray={classData.buffs} />
                 <Image style={styles.playerPortrait} source={classData.portrait} />
                 <StatusTracker type={'debuff'} statusArray={classData.debuffs} />
-            </View>
+            </LinearGradient>
 
             <View style={styles.rightSide}>
                 <View style={styles.healthbarWrapper}>
@@ -88,7 +96,13 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.playerTwo,
         boxShadow: 'inset 0 4 1 0 #bd910f, inset 0 5 1 0 rgba(0,0,0,.1),',
     },
-    portraitWrapper: { height: '100%', position: 'relative' },
+    portraitWrapper: {
+        height: '100%',
+        position: 'relative',
+        borderWidth: 2,
+        borderTopStartRadius: 10,
+        borderBottomStartRadius: 10,
+    },
     playerPortrait: {
         maxHeight: '100%',
         aspectRatio: 1,
@@ -106,7 +120,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: theme.borderWidth.medium,
         backgroundColor: 'red',
-        boxShadow: 'rgba(50, 50, 93, 0.4) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.4) 0px 18px 36px -18px inset',
+        boxShadow: 'rgba(50, 50, 93, 0.4) 0 30 60 -12 inset, rgba(0, 0, 0, 0.4) 0 18 36 -18 inset',
         borderRadius: 4,
     },
     healthBar: {
@@ -155,5 +169,10 @@ const styles = StyleSheet.create({
     abilityNotEnoughMana: {
         backgroundColor: 'gray',
     },
-    abilityIcon: { resizeMode: 'contain', height: '80%', width: '80%' },
+    abilityIcon: {
+        resizeMode: 'contain',
+        height: '80%',
+        width: '80%',
+        filter: [{ dropShadow: theme.shadows.dropShadow }],
+    },
 });

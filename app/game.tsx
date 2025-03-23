@@ -4,7 +4,7 @@ import PlayerFrame from '@/src/components/PlayerFrame';
 import { theme } from '@/src/theme';
 import GameBoard from '@/src/components/GameBoard';
 import { getBattleState, useGameStore } from '@/src/stores';
-import { Card } from '@/interfaces';
+import { Card } from '@/src/interfaces';
 import { createCards, matchCards } from '@/src/game/gameboard/gameBoardFunctions';
 import { useRouter } from 'expo-router';
 import GameOver from '@/src/components/GameOver';
@@ -122,20 +122,18 @@ export default function Game() {
     }
     return (
         <SafeAreaView style={styles.gameWrapper}>
+            <PlayerFrame player={2} classData={playerTwo} />
+
             {isGameOver ? (
                 <GameOver />
             ) : (
-                <>
-                    <PlayerFrame player={2} classData={playerTwo} />
-
-                    <GameBoard
-                        playerCards={playerTurn === 1 ? playerOneCards : playerTwoCards}
-                        onPress={isBoardActive ? handleFlip : undefined}
-                    />
-
-                    <PlayerFrame player={1} classData={playerOne} />
-                </>
+                <GameBoard
+                    playerCards={playerTurn === 1 ? playerOneCards : playerTwoCards}
+                    onPress={isBoardActive ? handleFlip : undefined}
+                />
             )}
+
+            <PlayerFrame player={1} classData={playerOne} />
         </SafeAreaView>
     );
 }

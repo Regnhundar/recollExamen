@@ -6,12 +6,14 @@ interface Props {
     text: string;
     onPress?: () => void;
     type?: 'proceed' | 'cancel' | 'info';
+    align?: 'center' | 'flex-start' | 'flex-end';
 }
-const TextButton: React.FC<Props> = ({ text, onPress, type = 'proceed' }) => {
+const TextButton: React.FC<Props> = ({ text, onPress, type = 'proceed', align = 'center' }) => {
     return (
         <TouchableHighlight
             style={[
                 styles.textButton,
+                { alignSelf: align },
                 type === 'proceed' ? styles.proceed : type === 'cancel' ? styles.cancel : styles.info,
             ]}
             onPress={onPress}>
@@ -26,9 +28,7 @@ const styles = StyleSheet.create({
     textButton: {
         paddingInline: theme.spacing.medium,
         paddingBlock: theme.spacing.small,
-        alignSelf: 'flex-start',
         boxShadow: theme.shadows.bulge,
-
         borderRadius: 4,
         borderWidth: 1,
     },

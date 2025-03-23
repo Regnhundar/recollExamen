@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Image } from 'react-native';
 import React from 'react';
-import { Card } from '@/interfaces';
+import { Card } from '@/src/interfaces';
 import { theme } from '../theme';
 import { useGameStore } from '../stores';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -37,10 +37,11 @@ export default function GameSquare({ card, onPress }: Props) {
 }
 
 const styles = StyleSheet.create({
-    gameSquareWrapper: { width: '45%', aspectRatio: 1, borderRadius: 4, padding: theme.spacing.large, borderWidth: 2 },
+    gameSquareWrapper: { width: '45%', aspectRatio: 1, borderRadius: 4, borderWidth: 2 },
     gameSquare: {
         aspectRatio: 1,
         width: '100%',
+        padding: theme.spacing.large,
     },
 
     gameSquarePlayerOne: {

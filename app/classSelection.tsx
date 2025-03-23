@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, SafeAreaView, ScrollView } from 'react-n
 import React, { useState } from 'react';
 import { useGameStore } from '@/src/stores';
 import { theme } from '@/src/theme';
-import { Ability, GameClass } from '@/interfaces';
+import { Ability, GameClass } from '@/src/interfaces';
 import { classes } from '@/src/game/player/classes';
 import { useRouter } from 'expo-router';
 import ClassInfo from '@/src/components/ClassInfo';

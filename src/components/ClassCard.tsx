@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
-import { GameClass } from '@/interfaces';
+import { GameClass } from '@/src/interfaces';
 import { theme } from '../theme';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -10,6 +10,7 @@ interface Props {
     index: number;
 }
 const ClassCard: React.FC<Props> = ({ classItem, setSelectedClass, index }) => {
+    const everyOtherStyle = index % 2 === 0 ? styles.classItemUneven : styles.classItemEven;
     return (
         <TouchableOpacity
             key={classItem.id}
@@ -20,30 +21,15 @@ const ClassCard: React.FC<Props> = ({ classItem, setSelectedClass, index }) => {
             onPress={() => setSelectedClass(classItem)}>
             <LinearGradient
                 colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.5)']}
-                style={[
-                    { backgroundColor: classItem.classColor },
-                    styles.classInfoImageWrapper,
-                    index % 2 === 0 ? styles.classItemUneven : styles.classItemEven,
-                ]}>
-                <Image
-                    source={classItem.portrait}
-                    style={[styles.classInfoImage, index % 2 === 0 ? styles.classItemUneven : styles.classItemEven]}
-                />
+                style={[{ backgroundColor: classItem.classColor }, styles.classInfoImageWrapper, everyOtherStyle]}>
+                <Image source={classItem.portrait} style={[styles.classInfoImage, everyOtherStyle]} />
             </LinearGradient>
             <LinearGradient
-                style={[
-                    styles.classInfoNameWrapper,
-                    { backgroundColor: classItem.classColor },
-                    index % 2 === 0 ? styles.classItemUneven : styles.classItemEven,
-                ]}
+                style={[styles.classInfoNameWrapper, { backgroundColor: classItem.classColor }, everyOtherStyle]}
                 colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.5)']}>
                 <Text style={styles.classInfoName}>{classItem.name}</Text>
             </LinearGradient>
-            <View
-                style={[
-                    styles.classInfoDescriptionWrapper,
-                    index % 2 === 0 ? styles.classItemUneven : styles.classItemEven,
-                ]}>
+            <View style={[styles.classInfoDescriptionWrapper, everyOtherStyle]}>
                 <Text style={styles.classInfoDescription}>{classItem.description}</Text>
             </View>
         </TouchableOpacity>

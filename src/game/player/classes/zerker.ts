@@ -1,4 +1,4 @@
-import { GameClass, Ability } from '../../../../interfaces/index';
+import { GameClass, Ability } from '../../../interfaces/index';
 import zerkerPortrait from '../../../../assets/images/characters/zerker/zerker.png';
 import zerkerFull from '../../../../assets/images/characters/zerker/zerker-full.png';
 import zerkerMadSwing from '../../../../assets/images/abilities/zerker/mad-swing.png';
@@ -6,7 +6,7 @@ import theLegs from '../../../../assets/images/abilities/zerker/the-legs.png';
 import zerkerEnrage from '../../../../assets/images/abilities/zerker/enrage.png';
 import { getBattleState } from '@/src/stores';
 import { applyStatusEffect, calculateDamage, manipulateHealth, updateAbilityMana } from '../abilityFunctions';
-import { Buff } from '@/interfaces/interfaceStatusEffects';
+import { Buff } from '@/src/interfaces/interfaceStatusEffects';
 
 const wildSwing: Ability = {
     id: 'wildSwing',

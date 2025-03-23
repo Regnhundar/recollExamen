@@ -1,4 +1,4 @@
-import { GameClass, Ability } from '../../../../interfaces';
+import { GameClass, Ability } from '../../../interfaces';
 import fallback from '../../../../assets/images/fallback.png';
 
 const defaultAbility: Ability = {
@@ -23,6 +23,7 @@ export const defaultClass: GameClass = {
     hp: 100,
     buffs: [],
     debuffs: [],
+    classColor: '#000',
     description: 'I am an unselected class',
     abilities: [defaultAbility, defaultAbility, defaultAbility],
 };

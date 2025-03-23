@@ -1,4 +1,4 @@
-import { Ability, Card, GameClass } from '@/interfaces';
+import { Ability, Card, GameClass } from '@/src/interfaces';
 import { fisherYatesShuffle } from '@/src/utility/general';
 
 //* description: Skapar kortlek bestående av spelarens valda klass. Abilities dupliceras och sätts i en array som blandas och returneras.

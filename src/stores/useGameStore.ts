@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { defaultClass } from '../game/player/classes/default';
-import { GameClass } from '../../interfaces/index';
+import { GameClass } from '../interfaces/index';
 
 interface GameStore {
     playerTurn: number;

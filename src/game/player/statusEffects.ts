@@ -1,4 +1,4 @@
-import { Debuff } from '@/interfaces/interfaceStatusEffects';
+import { Debuff } from '@/src/interfaces/interfaceStatusEffects';
 import { getBattleState } from '@/src/stores';
 import { manipulateHealth } from './abilityFunctions';
 import pyroFireball from '../../../assets/images/abilities/pyro/fire-ball.png';

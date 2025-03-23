@@ -1,4 +1,4 @@
-import { Card } from '@/interfaces';
+import { Card } from '@/src/interfaces';
 
 export const fisherYatesShuffle = (deck: Card[]): Card[] => {
     for (let i = deck.length - 1; i > 0; i--) {
