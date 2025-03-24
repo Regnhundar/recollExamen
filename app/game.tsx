@@ -72,46 +72,6 @@ export default function Game() {
             setPlayerTwoCards((prev) => updatePlayerCards(prev, id));
         }
     };
-    // useEffect(() => {
-    //     if (flippedCards.length >= 2 && flippedCards.length % 2 === 0) {
-    //         const player = playerTurn === 1 ? playerOne : playerTwo;
-    //         const matchResult = matchCards(flippedCards, player);
-
-    //         if (matchResult.success) {
-    //             const updateAbilityMana = playerTurn === 1 ? setPlayerOne : setPlayerTwo;
-    //             const getNewBoard = playerTurn === 1 ? setPlayerOneCards : setPlayerTwoCards;
-    //             const newDeck = playerTurn === 1 ? playerOneDeck : playerTwoDeck;
-    //             updateAbilityMana(matchResult.player);
-    //             if (flippedCards.length % 6 === 0) {
-    //                 setTimeout(() => {
-    //                     getNewBoard(newDeck);
-    //                 }, 1000);
-    //             }
-    //         } else {
-    //             setIsBoardActive(false);
-    //             setTimeout(() => {
-    //                 setPlayerTurn((prev) => (prev === 1 ? 2 : 1));
-    //             }, 1000);
-    //         }
-    //     }
-    // }, [flippedCards]);
-
-    // const updatePlayerCards = (cards: Card[], id: number) => {
-    //     const updatedCards = cards.map((card) => (card.id === id ? { ...card, isFlipped: true } : card));
-    //     const flippedCard = updatedCards.find((card) => card.id === id);
-    //     if (flippedCard) {
-    //         setFlippedCards((prev) => [...prev, flippedCard]);
-    //     }
-    //     return updatedCards;
-    // };
-
-    // const handleFlip = (id: number) => {
-    //     if (playerTurn === 1) {
-    //         setPlayerOneCards((prev) => updatePlayerCards(prev, id));
-    //     } else {
-    //         setPlayerTwoCards((prev) => updatePlayerCards(prev, id));
-    //     }
-    // };
 
     if (playerOne.id === 'default' || playerTwo.id === 'default') {
         return (

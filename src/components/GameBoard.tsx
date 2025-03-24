@@ -1,10 +1,11 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import GameSquare from './GameSquare';
 import { Card } from '@/src/interfaces';
 import { useGameStore } from '../stores';
 import { theme } from '../theme';
+
 interface Props {
     playerCards: Card[];
     onPress?: (arg: number) => void;

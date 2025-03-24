@@ -7,7 +7,6 @@ import { classes } from '@/src/game/player/classes';
 import { useRouter } from 'expo-router';
 import ClassInfo from '@/src/components/ClassInfo';
 import ClassCard from '@/src/components/ClassCard';
-import { LinearGradient } from 'expo-linear-gradient';
 
 export default function classSelection() {
     const [selectedClass, setSelectedClass] = useState<GameClass | null>(null);
@@ -41,15 +40,27 @@ export default function classSelection() {
     };
 
     return (
-        <LinearGradient style={styles.classSelectionPage} colors={[theme.colors.playerOne, theme.colors.playerTwo]}>
-            <SafeAreaView style={[styles.classSelectionPlayer, playerTurn === 1 ? styles.playerOne : styles.playerTwo]}>
-                <View
+        <View
+            style={[
+                styles.classSelectionPageWrapper,
+                playerTurn === 1
+                    ? { backgroundColor: theme.colors.playerOne }
+                    : { backgroundColor: theme.colors.playerTwo },
+            ]}>
+            <SafeAreaView
+                style={[
+                    styles.classSelectionPlayer,
+                    styles.classSelectionWrapper,
+                    playerTurn === 1 ? styles.playerOne : styles.playerTwo,
+                ]}>
+                <Text
                     style={[
-                        styles.classSelectionHeader,
-                        playerTurn === 1 ? styles.headerPlayerOne : styles.headerPlayerTwo,
+                        styles.classSelectionPlayerTurnText,
+                        playerTurn === 1 ? styles.classSelectionPlayerOneText : styles.classSelectionPlayerTwoText,
                     ]}>
-                    <Text>{playerTurn === 1 ? 'Spelare 1' : 'Spelare 2'}</Text>
-                </View>
+                    {playerTurn === 1 ? 'Select player one' : 'Select player two'}
+                </Text>
+
                 {!selectedClass ? (
                     <ScrollView
                         contentContainerStyle={{
@@ -75,32 +86,50 @@ export default function classSelection() {
                     />
                 )}
             </SafeAreaView>
-        </LinearGradient>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    classSelectionPage: {
+    classSelectionPageWrapper: {
         flex: 1,
         padding: theme.spacing.small,
+    },
+
+    classSelectionWrapper: {
         borderWidth: 2,
+        flex: 1,
+        padding: theme.spacing.small,
+        borderRadius: 8,
     },
     classSelectionHeader: {
-        minHeight: 50,
-        padding: theme.spacing.small,
-
-        boxShadow: theme.shadows.bulge,
-        borderWidth: 1,
+        alignSelf: 'center',
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
     },
     headerPlayerOne: {},
     headerPlayerTwo: {},
+    classSelectionPlayerTurnText: {
+        textAlign: 'center',
+        fontFamily: 'Bangers',
+        fontSize: 42,
+        ...theme.shadows.textShadowBlack,
+    },
+    classSelectionPlayerOneText: {
+        color: theme.colors.playerOne,
+    },
+    classSelectionPlayerTwoText: {
+        color: theme.colors.playerTwo,
+    },
+
     classSelectionPlayer: {
         gap: theme.spacing.medium,
+        backgroundColor: 'beige',
     },
-    playerOne: { flex: 1 },
+    playerOne: {},
     playerTwo: {
-        flex: 1,
         transform: [{ rotate: '180deg' }],
     },
-    classInfoWrapper: {},
 });

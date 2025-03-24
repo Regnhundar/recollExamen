@@ -74,6 +74,6 @@ export const zerkerClass: GameClass = {
     hp: 100,
     buffs: [],
     debuffs: [],
-    description: 'Hard hitting lunatic that can take a punch. Sometimes from himself!',
+    description: 'Swings wildly for big damage. Sometimes hits himself.',
     abilities: [wildSwing, eatALeg, bloodyNine],
 };

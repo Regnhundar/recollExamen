@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
         zIndex: 999,
     },
     statusEffect: {
+        borderRadius: 4,
         padding: 2,
         width: 40,
         height: 40,

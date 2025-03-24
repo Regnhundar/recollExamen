@@ -24,6 +24,7 @@ const ClassCard: React.FC<Props> = ({ classItem, setSelectedClass, index }) => {
                 style={[{ backgroundColor: classItem.classColor }, styles.classInfoImageWrapper, everyOtherStyle]}>
                 <Image source={classItem.portrait} style={[styles.classInfoImage, everyOtherStyle]} />
             </LinearGradient>
+
             <LinearGradient
                 style={[styles.classInfoNameWrapper, { backgroundColor: classItem.classColor }, everyOtherStyle]}
                 colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.5)']}>
@@ -44,8 +45,8 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         backgroundColor: theme.colors.offwhite,
         padding: theme.spacing.small,
-        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         height: 110,
         width: '100%',
         boxShadow: theme.shadows.bulge,
@@ -55,9 +56,11 @@ const styles = StyleSheet.create({
     classItemContainerUneven: { transform: [{ perspective: 100 }, { rotateZ: '-1deg' }] },
     classItemEven: { transform: [{ perspective: 100 }, { rotateZ: '-1deg' }] },
     classItemUneven: { transform: [{ perspective: 100 }, { rotateZ: '1deg' }] },
+
     classInfoImageWrapper: {
         borderWidth: 2,
-
+        position: 'absolute',
+        left: 10,
         width: 120,
         height: 120,
         justifyContent: 'center',
@@ -82,14 +85,15 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     classInfoName: {
-        alignSelf: 'flex-start',
         color: theme.colors.white,
-        filter: theme.shadows.dropShadow,
+        ...theme.shadows.textShadowBlack,
         fontSize: theme.fontSize.large,
     },
     classInfoDescriptionWrapper: {
-        padding: 10,
+        width: '60%',
+        padding: theme.spacing.small,
         flexShrink: 1,
+        alignSelf: 'flex-end',
     },
     classInfoDescription: {
         fontSize: theme.fontSize.medium,
