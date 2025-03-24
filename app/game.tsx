@@ -23,15 +23,11 @@ export default function Game() {
     const [playerTwoCards, setPlayerTwoCards] = useState<Card[]>(playerTwoDeck);
 
     useEffect(() => {
-        setFlippedCards([]);
-        const unFlipCards = (cards: Card[]) => cards.map((card) => ({ ...card, isFlipped: false }));
-        setPlayerOneCards((prev) => unFlipCards(prev));
-        setPlayerTwoCards((prev) => unFlipCards(prev));
         setIsBoardActive(true);
         if (player.buffs.length > 0 || player.debuffs.length > 0) {
             executeStatusEffects();
         }
-    }, [playerTurn]); // Resettar states när turn ändras och kör debuffs/buffs
+    }, [playerTurn]); // Kör debuffs/buffs när turn ändras och aktiverar brädet för nästa spelare.
 
     useEffect(() => {
         if (flippedCards.length >= 2 && flippedCards.length % 2 === 0) {
@@ -49,13 +45,20 @@ export default function Game() {
             } else {
                 setIsBoardActive(false);
                 setTimeout(() => {
-                    setPlayerTurn((prev) => (prev === 1 ? 2 : 1));
+                    setFlippedCards([]);
+                    const unFlipCards = (cards: Card[]) => cards.map((card) => ({ ...card, isFlipped: false }));
+                    setPlayerOneCards((prev) => unFlipCards(prev));
+                    setPlayerTwoCards((prev) => unFlipCards(prev));
+
+                    setTimeout(() => {
+                        setPlayerTurn((prev) => (prev === 1 ? 2 : 1));
+                    }, 350);
                 }, 1000);
             }
         }
     }, [flippedCards]); // Hanterar funktioner när kort vänds.
 
-    //* flippedCards/setFlippedCards samlar samtliga vända kort på en turn. Returen updatedCards används för att uppdatera spelbrädet.
+    //* flippedCards/setFlippedCards samlar samtliga vända kort på en turn och används för hur mycket mana man ska få. Returen updatedCards används för att uppdatera spelbrädet.
     const updatePlayerCards = (cards: Card[], id: number) => {
         const updatedCards = cards.map((card) => (card.id === id ? { ...card, isFlipped: true } : card));
         const flippedCard = updatedCards.find((card) => card.id === id);

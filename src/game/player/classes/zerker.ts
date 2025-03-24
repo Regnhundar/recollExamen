@@ -55,7 +55,7 @@ const bloodyNine: Ability = {
     mana: 0,
     cost: 0,
     baseDamage: 0,
-    description: 'Enrage and become posessed by a nine fingered demon! Deal double damage!',
+    description: 'Enrage and deal double damage! To everyone! Even yourself!',
     execute: () => {
         const { player, setPlayer } = getBattleState();
         const newStatusArray = applyStatusEffect(player.buffs, bloodyNineBuff);
