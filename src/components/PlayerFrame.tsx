@@ -11,7 +11,7 @@ interface Props {
     classData: GameClass;
 }
 export default function PlayerFrame({ player, classData }: Props) {
-    const { playerTurn } = useGameStore();
+    const { playerTurn, isGameOver } = useGameStore();
     const percentOfHitPoints = (classData.hp / classData.maxhp) * 100;
 
     const playerBasedShadow =
@@ -54,7 +54,9 @@ export default function PlayerFrame({ player, classData }: Props) {
                             key={`${ability.id}-${player}`}
                             style={[styles.abilityButton, playerBasedShadow]}
                             onPress={
-                                playerTurn === player && ability.mana === ability.cost ? ability.execute : undefined
+                                playerTurn === player && ability.mana === ability.cost && !isGameOver
+                                    ? ability.execute
+                                    : undefined
                             }>
                             <Image source={ability.icon} style={styles.abilityIcon} />
                             <Text
@@ -88,13 +90,13 @@ const styles = StyleSheet.create({
     playerOne: {
         marginTop: 'auto',
         backgroundColor: theme.colors.playerOne,
-        boxShadow: 'inset 0 4 1 0 #29d886, inset 0 5 1 0 rgba(0,0,0,.1),',
+        boxShadow: 'inset 0 4 1 0 #5ebff0, inset 0 5 1 0 rgba(0,0,0,.1),',
     },
     playerTwo: {
         marginBottom: 'auto',
         transform: [{ rotate: '180deg' }],
         backgroundColor: theme.colors.playerTwo,
-        boxShadow: 'inset 0 4 1 0 #bd910f, inset 0 5 1 0 rgba(0,0,0,.1),',
+        boxShadow: 'inset 0 4 1 0 #c06413, inset 0 5 1 0 rgba(0,0,0,.1),',
     },
     portraitWrapper: {
         height: '100%',
@@ -120,6 +122,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: theme.borderWidth.medium,
         backgroundColor: 'red',
+
         boxShadow: 'rgba(50, 50, 93, 0.4) 0 30 60 -12 inset, rgba(0, 0, 0, 0.4) 0 18 36 -18 inset',
         borderRadius: 4,
     },
@@ -134,6 +137,7 @@ const styles = StyleSheet.create({
         color: theme.colors.white,
         fontWeight: 600,
         zIndex: 999,
+        ...theme.shadows.textShadowBlackSmall,
     },
     abilityButtonContainer: {
         height: '60%',
@@ -162,9 +166,10 @@ const styles = StyleSheet.create({
         fontWeight: 600,
         color: theme.colors.white,
         borderWidth: 1,
+        ...theme.shadows.textShadowBlackSmall,
     },
     abilityEnoughMana: {
-        backgroundColor: 'green',
+        backgroundColor: theme.colors.proceed,
     },
     abilityNotEnoughMana: {
         backgroundColor: 'gray',

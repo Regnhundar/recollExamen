@@ -1,9 +1,8 @@
-import { Card } from '@/src/interfaces';
-
-export const fisherYatesShuffle = (deck: Card[]): Card[] => {
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
+export function fisherYatesShuffle<T>(array: T[]): T[] {
+    for (let i: number = array.length - 1; i > 0; i--) {
+        const j: number = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
-    return deck;
-};
+
+    return array;
+}

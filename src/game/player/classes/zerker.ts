@@ -55,7 +55,7 @@ const bloodyNine: Ability = {
     mana: 0,
     cost: 0,
     baseDamage: 0,
-    description: 'Enrage and become posessed by a nine fingered demon! Deal double damage!',
+    description: 'Enrage and deal double damage! To everyone! Even yourself!',
     execute: () => {
         const { player, setPlayer } = getBattleState();
         const newStatusArray = applyStatusEffect(player.buffs, bloodyNineBuff);
@@ -74,6 +74,6 @@ export const zerkerClass: GameClass = {
     hp: 100,
     buffs: [],
     debuffs: [],
-    description: 'Hard hitting lunatic that can take a punch. Sometimes from himself!',
+    description: 'Swings wildly for big damage. Sometimes hits himself.',
     abilities: [wildSwing, eatALeg, bloodyNine],
 };

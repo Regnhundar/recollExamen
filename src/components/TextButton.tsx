@@ -32,7 +32,12 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 1,
     },
-    textButtonText: { fontWeight: 600, fontSize: theme.fontSize.medium },
+    textButtonText: {
+        fontWeight: 600,
+        fontSize: theme.fontSize.medium,
+        color: theme.colors.white,
+        ...theme.shadows.textShadowBlack,
+    },
     proceed: { backgroundColor: theme.colors.proceed },
     cancel: {
         backgroundColor: theme.colors.cancel,

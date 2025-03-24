@@ -23,15 +23,11 @@ export default function Game() {
     const [playerTwoCards, setPlayerTwoCards] = useState<Card[]>(playerTwoDeck);
 
     useEffect(() => {
-        setFlippedCards([]);
-        const unFlipCards = (cards: Card[]) => cards.map((card) => ({ ...card, isFlipped: false }));
-        setPlayerOneCards((prev) => unFlipCards(prev));
-        setPlayerTwoCards((prev) => unFlipCards(prev));
         setIsBoardActive(true);
         if (player.buffs.length > 0 || player.debuffs.length > 0) {
             executeStatusEffects();
         }
-    }, [playerTurn]); // Resettar states när turn ändras och kör debuffs/buffs
+    }, [playerTurn]); // Kör debuffs/buffs när turn ändras och aktiverar brädet för nästa spelare.
 
     useEffect(() => {
         if (flippedCards.length >= 2 && flippedCards.length % 2 === 0) {
@@ -49,13 +45,20 @@ export default function Game() {
             } else {
                 setIsBoardActive(false);
                 setTimeout(() => {
-                    setPlayerTurn((prev) => (prev === 1 ? 2 : 1));
+                    setFlippedCards([]);
+                    const unFlipCards = (cards: Card[]) => cards.map((card) => ({ ...card, isFlipped: false }));
+                    setPlayerOneCards((prev) => unFlipCards(prev));
+                    setPlayerTwoCards((prev) => unFlipCards(prev));
+
+                    setTimeout(() => {
+                        setPlayerTurn((prev) => (prev === 1 ? 2 : 1));
+                    }, 350);
                 }, 1000);
             }
         }
     }, [flippedCards]); // Hanterar funktioner när kort vänds.
 
-    //* flippedCards/setFlippedCards samlar samtliga vända kort på en turn. Returen updatedCards används för att uppdatera spelbrädet.
+    //* flippedCards/setFlippedCards samlar samtliga vända kort på en turn och används för hur mycket mana man ska få. Returen updatedCards används för att uppdatera spelbrädet.
     const updatePlayerCards = (cards: Card[], id: number) => {
         const updatedCards = cards.map((card) => (card.id === id ? { ...card, isFlipped: true } : card));
         const flippedCard = updatedCards.find((card) => card.id === id);
@@ -72,46 +75,6 @@ export default function Game() {
             setPlayerTwoCards((prev) => updatePlayerCards(prev, id));
         }
     };
-    // useEffect(() => {
-    //     if (flippedCards.length >= 2 && flippedCards.length % 2 === 0) {
-    //         const player = playerTurn === 1 ? playerOne : playerTwo;
-    //         const matchResult = matchCards(flippedCards, player);
-
-    //         if (matchResult.success) {
-    //             const updateAbilityMana = playerTurn === 1 ? setPlayerOne : setPlayerTwo;
-    //             const getNewBoard = playerTurn === 1 ? setPlayerOneCards : setPlayerTwoCards;
-    //             const newDeck = playerTurn === 1 ? playerOneDeck : playerTwoDeck;
-    //             updateAbilityMana(matchResult.player);
-    //             if (flippedCards.length % 6 === 0) {
-    //                 setTimeout(() => {
-    //                     getNewBoard(newDeck);
-    //                 }, 1000);
-    //             }
-    //         } else {
-    //             setIsBoardActive(false);
-    //             setTimeout(() => {
-    //                 setPlayerTurn((prev) => (prev === 1 ? 2 : 1));
-    //             }, 1000);
-    //         }
-    //     }
-    // }, [flippedCards]);
-
-    // const updatePlayerCards = (cards: Card[], id: number) => {
-    //     const updatedCards = cards.map((card) => (card.id === id ? { ...card, isFlipped: true } : card));
-    //     const flippedCard = updatedCards.find((card) => card.id === id);
-    //     if (flippedCard) {
-    //         setFlippedCards((prev) => [...prev, flippedCard]);
-    //     }
-    //     return updatedCards;
-    // };
-
-    // const handleFlip = (id: number) => {
-    //     if (playerTurn === 1) {
-    //         setPlayerOneCards((prev) => updatePlayerCards(prev, id));
-    //     } else {
-    //         setPlayerTwoCards((prev) => updatePlayerCards(prev, id));
-    //     }
-    // };
 
     if (playerOne.id === 'default' || playerTwo.id === 'default') {
         return (

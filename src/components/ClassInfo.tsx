@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
         fontWeight: 600,
         fontSize: theme.fontSize.large,
         color: theme.colors.white,
+        ...theme.shadows.textShadowBlack,
     },
     selectedAbilityList: {
         flex: 3,
@@ -101,8 +102,8 @@ const styles = StyleSheet.create({
         padding: theme.spacing.large,
         flex: 2,
         alignSelf: 'center',
-        maxHeight: '40%',
-        maxWidth: '70%',
+        maxHeight: '35%',
+        maxWidth: '60%',
         boxShadow: theme.shadows.pictureFrame,
         marginTop: theme.spacing.medium,
         marginInline: theme.spacing.small,

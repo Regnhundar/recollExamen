@@ -16,7 +16,7 @@ export const fireBall: Ability = {
     mana: 0,
     cost: 2,
     baseDamage: 10,
-    description: `Shoot a fireball and deal direct damage that makes your enemy burn for ${burn.duration} turns.`,
+    description: `Deal direct damage that makes your enemy burn for ${burn.duration} turns.`,
     execute: () => {
         const { opponent, setOpponent, player, setPlayer } = getBattleState();
 
