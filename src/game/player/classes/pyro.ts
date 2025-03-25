@@ -1,12 +1,13 @@
-import { GameClass, Ability } from '../../../../interfaces';
+import { GameClass, Ability } from '../../../interfaces';
 import { applyStatusEffect, manipulateHealth, updateAbilityMana } from '../abilityFunctions';
 import { getBattleState } from '@/src/stores/battleState';
 import pyroPortrait from '../../../../assets/images/characters/pyro/pyro.png';
+import pyroFull from '../../../../assets/images/characters/pyro/pyroFull.png';
 import pyroFireball from '../../../../assets/images/abilities/pyro/fire-ball.png';
 import pyroFlameShield from '../../../../assets/images/abilities/pyro/flame-shield.png';
 import pyroBurningHeart from '../../../../assets/images/abilities/pyro/burning-heart.png';
 import { burn } from '../statusEffects';
-import { Buff } from '@/interfaces/interfaceStatusEffects';
+import { Buff } from '@/src/interfaces/interfaceStatusEffects';
 
 export const fireBall: Ability = {
     id: 'fireBall',
@@ -15,7 +16,7 @@ export const fireBall: Ability = {
     mana: 0,
     cost: 2,
     baseDamage: 10,
-    description: `Shoot a fireball and deal direct damage that makes your enemy burn for ${burn.duration} turns.`,
+    description: `Deal direct damage that makes your enemy burn for ${burn.duration} turns.`,
     execute: () => {
         const { opponent, setOpponent, player, setPlayer } = getBattleState();
 
@@ -35,7 +36,7 @@ const burninate: Ability = {
     mana: 0,
     cost: 5,
     baseDamage: 5,
-    description: 'Enemy burning? Consume burn to deal BIG DAMAGE! Not burning? Meh. Small damage.',
+    description: 'Consume burn to deal BIG DAMAGE! Not burning? Meh. Small damage.',
     execute: () => {
         const { opponent, setOpponent, player, setPlayer } = getBattleState();
 
@@ -104,7 +105,8 @@ export const pyroClass: GameClass = {
     id: 'pyro',
     name: 'Pyro',
     portrait: pyroPortrait,
-    fullPicture: pyroPortrait,
+    fullPicture: pyroFull,
+    classColor: '#A163C5',
     maxhp: 100,
     hp: 100,
     buffs: [],

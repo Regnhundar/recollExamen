@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, Platform } from 'react-native';
 import React from 'react';
 import { theme } from '../theme';
 import TextButton from './TextButton';
-import { GameClass } from '@/interfaces';
+import { GameClass } from '@/src/interfaces';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface Props {
     selectedClass: GameClass;
@@ -12,18 +13,31 @@ interface Props {
 const ClassInfo: React.FC<Props> = ({ selectedClass, setSelectedClass, handlePlayerSelect }) => {
     return (
         <View style={styles.selectedClassWrapper}>
-            <Text style={styles.selectedClassName}>{selectedClass.name.toUpperCase()}</Text>
-            <View style={styles.selectedClassImageWrapper}>
+            <LinearGradient
+                colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.5)']}
+                style={[styles.selectedClassImageWrapper, { backgroundColor: selectedClass.classColor }]}>
+                <Text style={styles.selectedClassName}>{selectedClass.name.toUpperCase()}</Text>
                 <Image source={selectedClass.fullPicture} style={styles.selectedClassPicture} />
-            </View>
+            </LinearGradient>
             <FlatList
                 style={styles.selectedAbilityList}
-                contentContainerStyle={{ paddingBottom: theme.spacing.large }}
+                contentContainerStyle={{
+                    paddingBottom: theme.spacing.large,
+                    paddingTop: theme.spacing.small,
+                    gap: theme.spacing.small,
+                    marginBlock: 'auto',
+                }}
                 data={selectedClass.abilities}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <View style={styles.selectedAbilityListItem}>
-                        <Image source={item.icon} style={styles.selectedAbilityIcon} />
+                        <Image
+                            source={item.icon}
+                            style={
+                                Platform.OS === 'android' &&
+                                ({ filter: [{ dropShadow: theme.shadows.dropShadow }] } as any)
+                            }
+                        />
                         <View style={styles.selectedAbilityListTextWrapper}>
                             <Text style={styles.selectedAbilityName}>{item.name.toUpperCase()}</Text>
                             <Text style={styles.selectedAbilityDescription}>{item.description}</Text>
@@ -33,8 +47,8 @@ const ClassInfo: React.FC<Props> = ({ selectedClass, setSelectedClass, handlePla
                 )}
             />
             <View style={styles.selectedClassButtonWrapper}>
-                <TextButton text='Tillbaka' type='cancel' onPress={() => setSelectedClass(null)} />
-                <TextButton text={`Välj ${selectedClass.name}`} onPress={handlePlayerSelect} />
+                <TextButton text='Back' type='cancel' onPress={() => setSelectedClass(null)} />
+                <TextButton text={`PICK ${selectedClass.name}`} onPress={handlePlayerSelect} />
             </View>
         </View>
     );
@@ -49,20 +63,27 @@ const styles = StyleSheet.create({
     selectedClassName: {
         fontWeight: 600,
         fontSize: theme.fontSize.large,
+        color: theme.colors.white,
+        ...theme.shadows.textShadowBlack,
     },
     selectedAbilityList: {
-        flex: 1,
+        flex: 3,
+        flexShrink: 1,
     },
     selectedAbilityListItem: {
+        gap: theme.spacing.medium,
+        padding: theme.spacing.small,
         flexDirection: 'row',
-        flex: 1,
         alignItems: 'center',
+        boxShadow: theme.shadows.bulge,
+        backgroundColor: theme.colors.offwhite,
+        borderRadius: 4,
+        borderWidth: 2,
     },
     selectedAbilityIcon: {
-        backgroundColor: 'red',
+        filter: [{ dropShadow: theme.shadows.dropShadow }],
     },
     selectedAbilityListTextWrapper: {
-        padding: theme.spacing.small,
         flex: 1,
     },
     selectedAbilityName: {
@@ -79,12 +100,22 @@ const styles = StyleSheet.create({
     },
     selectedClassImageWrapper: {
         padding: theme.spacing.large,
-        flex: 1,
+        flex: 2,
+        alignSelf: 'center',
+        maxHeight: '35%',
+        maxWidth: '60%',
+        boxShadow: theme.shadows.pictureFrame,
+        marginTop: theme.spacing.medium,
+        marginInline: theme.spacing.small,
+        borderTopStartRadius: 50,
+        borderTopEndRadius: 50,
+        borderWidth: 2,
     },
 
     selectedClassPicture: {
+        alignSelf: 'center',
+        filter: [{ dropShadow: theme.shadows.dropShadow }],
         resizeMode: 'contain',
-        width: '100%',
         height: '100%',
     },
 });

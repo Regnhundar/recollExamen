@@ -1,4 +1,4 @@
-import { GameClass, Ability } from '../../../../interfaces/index';
+import { GameClass, Ability } from '../../../interfaces/index';
 import zerkerPortrait from '../../../../assets/images/characters/zerker/zerker.png';
 import zerkerFull from '../../../../assets/images/characters/zerker/zerker-full.png';
 import zerkerMadSwing from '../../../../assets/images/abilities/zerker/mad-swing.png';
@@ -6,7 +6,7 @@ import theLegs from '../../../../assets/images/abilities/zerker/the-legs.png';
 import zerkerEnrage from '../../../../assets/images/abilities/zerker/enrage.png';
 import { getBattleState } from '@/src/stores';
 import { applyStatusEffect, calculateDamage, manipulateHealth, updateAbilityMana } from '../abilityFunctions';
-import { Buff } from '@/interfaces/interfaceStatusEffects';
+import { Buff } from '@/src/interfaces/interfaceStatusEffects';
 
 const wildSwing: Ability = {
     id: 'wildSwing',
@@ -55,7 +55,7 @@ const bloodyNine: Ability = {
     mana: 0,
     cost: 0,
     baseDamage: 0,
-    description: 'Enrage and become posessed by a nine fingered demon! Deal double damage!',
+    description: 'Enrage and deal double damage! To everyone! Even yourself!',
     execute: () => {
         const { player, setPlayer } = getBattleState();
         const newStatusArray = applyStatusEffect(player.buffs, bloodyNineBuff);
@@ -69,10 +69,11 @@ export const zerkerClass: GameClass = {
     name: 'Zerker',
     portrait: zerkerPortrait,
     fullPicture: zerkerFull,
-    maxhp: 120,
-    hp: 120,
+    classColor: '#9E6546',
+    maxhp: 100,
+    hp: 100,
     buffs: [],
     debuffs: [],
-    description: 'Hard hitting lunatic that can take a punch. Sometimes from himself!',
+    description: 'Swings wildly for big damage. Sometimes hits himself.',
     abilities: [wildSwing, eatALeg, bloodyNine],
 };

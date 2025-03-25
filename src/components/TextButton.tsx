@@ -5,12 +5,17 @@ import { theme } from '../theme';
 interface Props {
     text: string;
     onPress?: () => void;
-    type?: 'proceed' | 'cancel';
+    type?: 'proceed' | 'cancel' | 'info';
+    align?: 'center' | 'flex-start' | 'flex-end';
 }
-const TextButton: React.FC<Props> = ({ text, onPress, type = 'proceed' }) => {
+const TextButton: React.FC<Props> = ({ text, onPress, type = 'proceed', align = 'center' }) => {
     return (
         <TouchableHighlight
-            style={[styles.textButton, type === 'proceed' ? styles.proceed : styles.cancel]}
+            style={[
+                styles.textButton,
+                { alignSelf: align },
+                type === 'proceed' ? styles.proceed : type === 'cancel' ? styles.cancel : styles.info,
+            ]}
             onPress={onPress}>
             <Text style={styles.textButtonText}>{text.toUpperCase()}</Text>
         </TouchableHighlight>
@@ -23,15 +28,21 @@ const styles = StyleSheet.create({
     textButton: {
         paddingInline: theme.spacing.medium,
         paddingBlock: theme.spacing.small,
-        alignSelf: 'flex-start',
-        boxShadow: theme.shadows.buttonShadow,
-        filter: [{ dropShadow: theme.shadows.dropShadow }],
+        boxShadow: theme.shadows.bulge,
         borderRadius: 4,
         borderWidth: 1,
     },
-    textButtonText: { fontWeight: 600, fontSize: theme.fontSize.medium },
-    proceed: { backgroundColor: '#017A36' },
+    textButtonText: {
+        fontWeight: 600,
+        fontSize: theme.fontSize.medium,
+        color: theme.colors.white,
+        ...theme.shadows.textShadowBlack,
+    },
+    proceed: { backgroundColor: theme.colors.proceed },
     cancel: {
-        backgroundColor: '#CF231F',
+        backgroundColor: theme.colors.cancel,
+    },
+    info: {
+        backgroundColor: theme.colors.info,
     },
 });

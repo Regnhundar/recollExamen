@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, SafeAreaView, ScrollView } from 'react-native';
+import React, { useState } from 'react';
 import { useGameStore } from '@/src/stores';
 import { theme } from '@/src/theme';
-import { Ability, GameClass } from '@/interfaces';
+import { Ability, GameClass } from '@/src/interfaces';
 import { classes } from '@/src/game/player/classes';
 import { useRouter } from 'expo-router';
 import ClassInfo from '@/src/components/ClassInfo';
+import ClassCard from '@/src/components/ClassCard';
 
 export default function classSelection() {
     const [selectedClass, setSelectedClass] = useState<GameClass | null>(null);
@@ -19,7 +20,7 @@ export default function classSelection() {
         const resetAbilities = selectedClass.abilities.map((ability) => ({ ...ability, mana: 0 })) as [
             Ability,
             Ability,
-            Ability
+            Ability,
         ];
         const selectedPlayerClass = {
             ...selectedClass,
@@ -39,62 +40,96 @@ export default function classSelection() {
     };
 
     return (
-        <SafeAreaView style={[styles.classSelectionContainer, playerTurn === 1 ? styles.playerOne : styles.playerTwo]}>
-            {!selectedClass ? (
-                <View style={styles.classInfoWrapper}>
-                    {classes.map((classItem) => (
-                        <TouchableOpacity
-                            key={classItem.id}
-                            style={styles.classItemContainer}
-                            onPress={() => setSelectedClass(classItem)}>
-                            <Image source={classItem.portrait} style={styles.classInfoImage} />
-                            <Text style={styles.classInfoName}>{classItem.name}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            ) : (
-                <ClassInfo
-                    selectedClass={selectedClass}
-                    setSelectedClass={setSelectedClass}
-                    handlePlayerSelect={handlePlayerSelect}
-                />
-            )}
-        </SafeAreaView>
+        <View
+            style={[
+                styles.classSelectionPageWrapper,
+                playerTurn === 1
+                    ? { backgroundColor: theme.colors.playerOne }
+                    : { backgroundColor: theme.colors.playerTwo },
+            ]}>
+            <SafeAreaView
+                style={[
+                    styles.classSelectionPlayer,
+                    styles.classSelectionWrapper,
+                    playerTurn === 1 ? styles.playerOne : styles.playerTwo,
+                ]}>
+                <Text
+                    style={[
+                        styles.classSelectionPlayerTurnText,
+                        playerTurn === 1 ? styles.classSelectionPlayerOneText : styles.classSelectionPlayerTwoText,
+                    ]}>
+                    {playerTurn === 1 ? 'Select player one' : 'Select player two'}
+                </Text>
+
+                {!selectedClass ? (
+                    <ScrollView
+                        contentContainerStyle={{
+                            flexDirection: 'row',
+                            flexWrap: 'wrap',
+                            gap: theme.spacing.large,
+                            marginTop: 20,
+                        }}>
+                        {classes.map((classItem, i) => (
+                            <ClassCard
+                                key={classItem.id}
+                                classItem={classItem}
+                                setSelectedClass={setSelectedClass}
+                                index={i}
+                            />
+                        ))}
+                    </ScrollView>
+                ) : (
+                    <ClassInfo
+                        selectedClass={selectedClass}
+                        setSelectedClass={setSelectedClass}
+                        handlePlayerSelect={handlePlayerSelect}
+                    />
+                )}
+            </SafeAreaView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    classSelectionContainer: {
-        padding: theme.spacing.medium,
-
+    classSelectionPageWrapper: {
         flex: 1,
+        padding: theme.spacing.small,
     },
-    playerOne: {
-        backgroundColor: theme.colors.playerOne,
+
+    classSelectionWrapper: {
+        borderWidth: 2,
+        flex: 1,
+        padding: theme.spacing.small,
+        borderRadius: 8,
     },
+    classSelectionHeader: {
+        alignSelf: 'center',
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+    },
+    headerPlayerOne: {},
+    headerPlayerTwo: {},
+    classSelectionPlayerTurnText: {
+        textAlign: 'center',
+        fontFamily: 'Bangers',
+        fontSize: 42,
+        ...theme.shadows.textShadowBlack,
+    },
+    classSelectionPlayerOneText: {
+        color: theme.colors.playerOne,
+    },
+    classSelectionPlayerTwoText: {
+        color: theme.colors.playerTwo,
+    },
+
+    classSelectionPlayer: {
+        gap: theme.spacing.medium,
+        backgroundColor: 'beige',
+    },
+    playerOne: {},
     playerTwo: {
         transform: [{ rotate: '180deg' }],
-        backgroundColor: theme.colors.playerTwo,
-    },
-    classInfoWrapper: {
-        gap: theme.spacing.large,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    classItemContainer: {
-        borderWidth: 2,
-        padding: theme.spacing.large,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    classInfoImage: {
-        width: 250,
-        height: 250,
-        resizeMode: 'contain',
-    },
-    classInfoName: {
-        color: theme.colors.white,
-        fontSize: theme.fontSize.large,
-        textAlign: 'center',
     },
 });

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
-import { Buff, Debuff } from '@/interfaces/interfaceStatusEffects';
+import { Buff, Debuff } from '@/src/interfaces/interfaceStatusEffects';
 import { theme } from '../theme';
 
 interface Props {
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
         zIndex: 999,
     },
     statusEffect: {
+        borderRadius: 4,
         padding: 2,
         width: 40,
         height: 40,
