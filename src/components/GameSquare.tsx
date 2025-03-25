@@ -98,5 +98,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignContent: 'center',
+        transform: [{ rotateY: '180deg' }],
     },
 });
