@@ -32,7 +32,7 @@ const GameOver: React.FC<Props> = () => {
             end={{ x: 1, y: 1 }}
             style={styles.gameOver}>
             <GameOverMessageCard player={2} winner={winner} />
-            <TextButton text={'spela igen'} onPress={handleRematch} />
+            <TextButton text={'play again'} onPress={handleRematch} />
             <GameOverMessageCard player={1} winner={winner} />
         </LinearGradient>
     );

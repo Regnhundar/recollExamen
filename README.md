@@ -1,50 +1,64 @@
-# Welcome to your Expo app 👋
+# **RECOLLACTION:**
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<br>
 
-## Get started
+### **KURS:**
 
-1. Install dependencies
+_"EXAMENSARBETE"_
 
-   ```bash
-   npm install
-   ```
+<br>
 
-2. Start the app
+### **ELEV:**
 
-   ```bash
-    npx expo start
-   ```
+MAGNUS NILSSON
 
-In the output, you'll find options to open the app in a
+<br>
+<br>
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+# **PROJEKTET:**
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### **HUR MAN TESTAR APPEN:**
 
-## Get a fresh project
+Kort svar. Be mig om en .apk fil så du kan installera appen på din android telefon.
 
-When you're ready, run:
+Vill du testa koden lokalt behöver du ta hem appen [EXPO GO](https://play.google.com/store/apps/details?id=host.exp.exponent&pli=1) på din telefon.
 
-```bash
-npm run reset-project
-```
+Klona repot till din dator.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Skriv i terminalen:
 
-## Learn more
+`npm i `
 
-To learn more about developing your project with Expo, look at the following resources:
+Följt av:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+`npx expo start`
 
-## Join the community
+Du kommer nu se en QR-kod.
 
-Join our community of developers creating universal apps.
+Öppna expo go på din telefon. Du ska se ett val att scanna en QR-kod. Välj det och scanna QR-koden i terminalen. Detta ska starta appen.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Du SKA inte behöva skapa ett konto på expo men om den tvingar dig till det så hittar du adressen [HÄR](https://expo.dev/).
+
+Om inte detta fungerar och du inte vill installera en apk-fil så försöker vi lösa det med en webtunnel till min dev-server.
+
+### **VAD HAR JAG BYGGT?**
+
+Jag har som mitt första projekt i React-Native byggt ett spel. Det är ett klassbaserat memory-spel där man spelar mot en annan spelare på samma mobiltelefon. Man sitter mittemot varandra med telefonen i mitten.
+
+Varje klass har 3 abilities. För att få mana till dessa abilities så matchar du kort. Första korten du matchar på din omgång ger 1 mana till sin respektive ability. Andra paret ger 2 och så fortsätter det så tills du misslyckas och det resettar tillbaka till 1 igen. Matchar du alla 3 abilities får du en ny slumpad spelplan och kombon fortsätter.
+
+Spelet når game over när din eller din motståndares hälsa når 0.
+
+### **PLANERING:**
+
+Jag fick idéen till spelet för ganska länge sedan men har hela tiden tänkt att det ska göras som en app för att slippa adressfältet, statusbar osv.
+
+Väldigt nyfiken på att skapa appar och då jag vid det här laget tycker jag kan vanliga React så borde det vara lätt att gå över till native.
+
+Jag började med att spåna på idéer och basic layout i FIGMA: [LÄNK HÄR](https://www.figma.com/design/Utjr2rRZpQy4rXqkazPtht/Memorizer?node-id=0-1&t=01LRsVt8EwXxLyKs-1).
+
+Efter det skapade jag upp repot på github och gjorde ett project på github projects med initiala userstories i backloggen:
+
+![Github-project](/assets/images/githubProjects.png)
+
+Jag har jobbat enligt principen "Make it work, make it good". Nu har inte tiden räckt till för att göra det faktiskt bra men allteftersom backlog blivit tom har jag lagt till nya features för att förbättra det som sticker ut mest. En iterativ process helt enkelt.

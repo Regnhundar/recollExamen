@@ -13,7 +13,7 @@ const wildSwing: Ability = {
     name: 'Wild swing',
     icon: zerkerMadSwing,
     mana: 0,
-    cost: 0,
+    cost: 2,
     baseDamage: 20,
     description: 'Swing wildly dealing big damage. Sometimes hitting yourself instead!',
     execute: () => {
@@ -36,7 +36,7 @@ const eatALeg: Ability = {
     name: 'What about the legs?',
     icon: theLegs,
     mana: 0,
-    cost: 5,
+    cost: 3,
     baseDamage: 20,
     description: 'Since no one needs both of them. Take a bite and heal back up!',
     execute: () => {
@@ -53,7 +53,7 @@ const bloodyNine: Ability = {
     name: 'Bloody nine!',
     icon: zerkerEnrage,
     mana: 0,
-    cost: 0,
+    cost: 6,
     baseDamage: 0,
     description: 'Enrage and deal double damage! To everyone! Even yourself!',
     execute: () => {

@@ -34,7 +34,7 @@ const burninate: Ability = {
     name: 'Burninate',
     icon: pyroFlameShield,
     mana: 0,
-    cost: 5,
+    cost: 4,
     baseDamage: 5,
     description: 'Consume burn to deal BIG DAMAGE! Not burning? Meh. Small damage.',
     execute: () => {
@@ -89,7 +89,7 @@ const burningHeart: Ability = {
     name: 'Burning heart',
     icon: pyroBurningHeart,
     mana: 0,
-    cost: 0,
+    cost: 4,
     baseDamage: 0,
     description: `Shoot a fireball each time you match fireball cards for ${burningHeartBuff.duration} turns.`,
     execute: () => {
