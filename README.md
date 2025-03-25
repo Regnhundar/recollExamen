@@ -62,3 +62,13 @@ Efter det skapade jag upp repot på github och gjorde ett project på github pro
 ![Github-project](/assets/images/githubProjects.png)
 
 Jag har jobbat enligt principen "Make it work, make it good". Nu har inte tiden räckt till för att göra det faktiskt bra men allteftersom backlog blivit tom har jag lagt till nya features för att förbättra det som sticker ut mest. En iterativ process helt enkelt.
+
+### **STRUKTUR:**
+
+Jag har försökt strukturera koden på ett logiskt sätt. Mapparna app(som innehåller routes, tänk pages) och assets måste vara i root och kan inte flyttas.
+
+Resten har jag flyttat till src där components, interfaces, stores osv har egna mappar. Mappen theme innehåller vad man kan likna med CSS-variabler.
+
+Jag har försökt bryta ned funktioner till mindre delar för att sedan använda de små funktionerna för att bygga logiken. I utility håller jag allmänna funktioner. Mappen game är uppdelad till två: gameboard och player.
+
+Gameboard innehåller utility-funktioner relaterade till gameboard medan player håller utility funktioner och data specifikt för spelarna.
