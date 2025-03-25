@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         padding: theme.spacing.medium,
         flex: 1,
         flexWrap: 'wrap',
-        flexDirection: 'column',
+        flexDirection: 'row',
         width: '100%',
         backgroundColor: '#685755',
     },
